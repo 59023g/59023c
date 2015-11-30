@@ -14,6 +14,9 @@ RUN git clone https://github.com/tj/n && \
 
 # Install nodemon
 RUN npm install -g nodemon@1.8.1
+ADD nodemon.json nodemon.json
+
+
 
 # Provides cached layer for node_modules
 ADD package.json /tmp/package.json
@@ -24,8 +27,9 @@ RUN mkdir -p /src && cp -a /tmp/node_modules /src/
 WORKDIR /src
 ADD . /src
 
+
 # Expose port
 EXPOSE  8080
 
 # Run app using nodemon
-CMD ["nodemon", "/src/index.js"]
+CMD ["nodemon", "-L", "/src/index.js"]
