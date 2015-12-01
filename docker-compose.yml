@@ -12,6 +12,8 @@ node1:
         - redis
     ports:
         - "8080"
+    # todo - command here out of node DF
+    # command:
 redis:
     image: redis
     ports:
