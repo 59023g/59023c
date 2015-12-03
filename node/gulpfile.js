@@ -1,27 +1,49 @@
-
-'use strict';
-
-var browserify = require('browserify');
 var gulp = require('gulp');
-var reactify = require('reactify');
+var source = require('vinyl-source-stream'); // Used to stream bundle for further handling
+var browserify = require('browserify');
+var watchify = require('watchify');
+var concat = require('gulp-concat');
+var del = require('del');
+var less = require('gulp-less');
+var path = require('path');
 
-gulp.task('javascript', function () {
-  // set up the browserify instance on a task basis
-  var b = browserify({
-    entries: './entry.js',
-    debug: true,
-    // defining transforms here will avoid crashing your stream
-    transform: [reactify]
-  });
-
-  return b.bundle()
-    .pipe(source('app.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
-        // Add transformation tasks to the pipeline here.
-        .pipe(uglify())
-        .on('error', gutil.log)
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./dist/js/'));
+gulp.task('clean', function () {
+  return del(
+    './dist/**'
+  );
 });
 
+gulp.task('browserify', function() {
+    var bundler = browserify({
+        entries: ['./app/index.js'],
+        debug: true,
+        cache: {}, packageCache: {}, fullPaths: true
+    });
+
+    var watcher  = watchify(bundler);
+
+    return watcher
+    .on('update', function () {
+        var updateStart = Date.now();
+        console.log('Updating!');
+        watcher.bundle()
+        .pipe(source('index.js'))
+    // This is where you add uglifying etc.
+        .pipe(gulp.dest('./dist/'));
+        console.log('Updated!', (Date.now() - updateStart) + 'ms');
+    })
+    .bundle() // Create the initial bundle when starting the task
+    .pipe(source('index.js'))
+    .pipe(gulp.dest('./dist/'));
+});
+
+
+gulp.task('less', function () {
+  return gulp.src('./app/less/**/*.less')
+    .pipe(less({
+      paths: [ path.join(__dirname, 'less', 'includes') ]
+    }))
+    .pipe(gulp.dest('./dist/css'));
+});
+
+gulp.task('default', ['clean', 'browserify', 'less']);
