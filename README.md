@@ -21,6 +21,9 @@ stack:
 * [node_redis](https://github.com/NodeRedis/node_redis)
 * [nodemon](https://github.com/remy/nodemon#nodemon)@1.8.1
 * express@4.13.3
+* [gulp](https://github.com/gulpjs/gulp)@3.9.0
+* [browserify](https://github.com/substack/node-browserify)@12.0.1
+* [watchify](https://github.com/substack/watchify)@3.6.1
 * browserify, watchify, browserify-hmr, react-hot-transform, brfs?, factor-bundle
 * https://github.com/Kureev/browserify-react-live
 * react (routing?)
