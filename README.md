@@ -14,14 +14,15 @@ else: `docker-machine start default`
 stack:
 * dev - [boot2docker](https://github.com/boot2docker/boot2docker) because mac osx
 * prod - digital ocean, dokku?
-* [docker-compose](https://docs.docker.com/compose/): debian:jessie, [volumes!](https://docs.docker.com/engine/userguide/dockervolumes/)[volumes2](http://container-solutions.com/understanding-volumes-docker/)[volumes3](https://groups.google.com/forum/#!msg/docker-user/EUndR1W5EBo/4hmJau8WyjAJ)
+* [doc  ker-compose](https://docs.docker.com/compose/): debian:jessie, [volumes!](https://docs.docker.com/engine/userguide/dockervolumes/)[volumes2](http://container-solutions.com/understanding-volumes-docker/)[volumes3](https://groups.google.com/forum/#!msg/docker-user/EUndR1W5EBo/4hmJau8WyjAJ)
 * nginx@1.6.2-5
 * redis-server@2.8.17
 * node@[5.0.0](https://nodejs.org/docs/v5.0.0/api/) via [tj/n](https://github.com/tj/n) install method
 * [node_redis](https://github.com/NodeRedis/node_redis)
 * [nodemon](https://github.com/remy/nodemon#nodemon)@1.8.1
 * express@4.13.3
-* browserify/webpack (gulp?)
+* browserify, watchify, browserify-hmr, react-hot-transform, brfs?, factor-bundle
+* https://github.com/Kureev/browserify-react-live
 * react (routing?)
 * backbone?
 * babel?
