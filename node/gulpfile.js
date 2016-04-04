@@ -1,19 +1,19 @@
-var gulp = require('gulp'),
-  source = require('vinyl-source-stream'),
-  buffer = require('vinyl-buffer'),
+var gulp     = require('gulp'),
+  source     = require('vinyl-source-stream'),
+  buffer     = require('vinyl-buffer'),
   browserify = require('browserify'),
-  uglify = require('gulp-uglify'),
+  uglify     = require('gulp-uglify'),
   sourcemaps = require('gulp-sourcemaps'),
-  del = require('del'),
-  gutil = require('gulp-util'),
-  plumber = require('gulp-plumber'),
-  resolve = require('resolve'),
-  watchify = require('watchify');
+  del        = require('del'),
+  gutil      = require('gulp-util'),
+  plumber    = require('gulp-plumber'),
+  resolve    = require('resolve'),
+  watchify   = require('watchify');
 
 var dependencies = ['d3', 'react', 'react-dom'];
 
-gulp.task('default', ['clean', 'js:app', 'js:libs', 'favicon']);
-gulp.task('prod', ['clean', 'js:app:prod', 'js:libs', 'favicon']);
+gulp.task('default', ['clean', 'js:client', 'js:libs', 'favicon']);
+gulp.task('prod', ['clean', 'js:client:prod', 'js:libs', 'favicon']);
 
 function handleErrors(error) {
   gutil.log(gutil.colors.red('Compile Error \n' + error ));
@@ -32,12 +32,12 @@ gulp.src = function() {
 
 // note - dist should be build artifact
 gulp.task('clean', function() {
-  del('./app/dist/**/**');
+  del('./client/dist/**/**');
 });
 
 gulp.task('favicon', function() {
-  return gulp.src('./app/img/favicon/*')
-    .pipe(gulp.dest('./app/dist/'));
+  return gulp.src('./client/img/favicon/*')
+    .pipe(gulp.dest('./client/dist/'));
 });
 
 gulp.task('js:libs', function() {
@@ -49,25 +49,25 @@ gulp.task('js:libs', function() {
     .pipe(source('libs.js'))
     .pipe(buffer())
     .pipe(uglify({ mangle: true, compress: true  }))
-    .pipe(gulp.dest('./app/dist/'));
+    .pipe(gulp.dest('./client/dist/'));
 });
 
-gulp.task('js:app:prod', function() {
-  return browserify('./app/index.js')
+gulp.task('js:client:prod', function() {
+  return browserify('./client/index.js')
     .transform("babelify")
     .external(dependencies)
     .bundle()
     .on('error', handleErrors)
-    .pipe(source('app.min.js'))
+    .pipe(source('client.min.js'))
     .pipe(buffer())
     .pipe(uglify({ mangle: true, compress: true  }))
-    .pipe(gulp.dest('./app/dist/'));
+    .pipe(gulp.dest('./client/dist/'));
 
 });
 
-gulp.task('js:app', function() {
+gulp.task('js:client', function() {
   var props = {
-    entries: './app/index.js',
+    entries: './client/index.js',
     cache: {},
     packageCache: {},
     verbose: true
@@ -80,13 +80,13 @@ gulp.task('js:app', function() {
   function rebundle() {
     var stream = bundler.bundle();
     return stream.on('error', handleErrors)
-      .pipe(source('app.min.js'))
+      .pipe(source('client.min.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init({
         loadMaps: true
       }))
       .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('./app/dist/'));
+      .pipe(gulp.dest('./client/dist/'));
   }
   bundler.on('update', function() {
     rebundle();
