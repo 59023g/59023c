@@ -1,21 +1,22 @@
+require('babel-core/register');
+
 var express = require('express'),
-    http = require('http'),
-    redis = require('redis');
+    http    = require('http'),
+    request = require('request'),
+    fs      = require('fs'),
+    routes  = require('./routes'),
+    d3      = require('d3');
+    data    = require('./processData');
 
-var app = express();
+var app     = express();
 
-console.log(process.env.REDIS_PORT_6379_TCP_ADDR + ':' + process.env.REDIS_PORT_6379_TCP_PORT);
+app.locals.pretty = true;
 
-// APPROACH 2: Using host entries created by Docker in /etc/hosts (RECOMMENDED)
-var client = redis.createClient('6379', 'redis');
+app.use('/', express.static(__dirname + '/app/dist/' ));
+app.use('/', express.static(__dirname + '/app/less/' ));
+app.use('/data', express.static('djia_start_date=2005-01-14&end_date=2015-11-01.json' ));
 
-console.log('bo')
-app.get('/', function(req, res, next) {
-  client.incr('counter', function(err, counter) {
-    if(err) return next(err);
-    res.send('This page has been viewedd ' + counter + ' times!');
-  });
-});
+app.get('*', routes.index);
 
 http.createServer(app).listen(process.env.PORT || 8080, function() {
   console.log('Listening on port ' + (process.env.PORT || 8080));
