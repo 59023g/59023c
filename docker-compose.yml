@@ -16,5 +16,7 @@ node1:
     # command:
 redis:
     build: ./redis
+    volumes:
+        - /Users/mpierce/www/59023c/redis/data:/data
     ports:
         - "6379"
