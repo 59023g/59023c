@@ -2,19 +2,18 @@ require('babel-core/register');
 
 var express = require('express'),
     http    = require('http'),
+    redis   = require('redis'),
     request = require('request'),
     fs      = require('fs'),
-    routes  = require('./routes'),
-    d3      = require('d3');
-    data    = require('./processData');
+    routes  = require('./routes');
 
 var app     = express();
 
-app.locals.pretty = true;
+console.log(process.env.REDIS_PORT_6379_TCP_ADDR + ':' + process.env.REDIS_PORT_6379_TCP_PORT);
 
-app.use('/', express.static(__dirname + '/app/dist/' ));
-app.use('/', express.static(__dirname + '/app/less/' ));
-app.use('/data', express.static('djia_start_date=2005-01-14&end_date=2015-11-01.json' ));
+var client = redis.createClient('6379', 'redis');
+
+app.use('/', express.static(__dirname + '/client/dist/' ));
 
 app.get('*', routes.index);
 
