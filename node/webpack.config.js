@@ -5,7 +5,7 @@ module.exports = {
 
   output: {
     path: 'public',
-    filename: 'bundle.js',
+    filename: '59023c.min.js',
     publicPath: '/'
   },
 
