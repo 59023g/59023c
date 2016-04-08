@@ -9,7 +9,7 @@ module.exports = (
   </head>
   <body>
     <div id=app></div>
-    <script src="/bundle.js"></script>
+    <script src="./59023c.min.js"></script>
   </body>
 </html>
 `
