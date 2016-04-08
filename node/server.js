@@ -8,9 +8,8 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 
-import routes from './routes'
+import routes from './modules/routes'
 import index from './server_index.js'
-
 
 var app = express()
 app.use(compression())
@@ -38,7 +37,6 @@ app.get('*', (req, res) => {
 })
 
 
-app.createServer(app)
-  .listen(process.env.PORT || 8080, function () {
+app.listen(process.env.PORT || 8080, function () {
     console.log(process.env + ' Listening on port ' + (process.env.PORT || 8080));
   });
