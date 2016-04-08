@@ -1,8 +1,0 @@
-{
-  "restartable": "rs",
-  "verbose": true,
-  "execMap": {
-    "js": "node --harmony"
-  },
-  "ext": "js"
-}
