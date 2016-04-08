@@ -1,3 +1,6 @@
 node/node_modules
-node/client/dist
+*.min.js
+*.min.js.map
+libs.js
 redis/data
+node/npm-debug.log
