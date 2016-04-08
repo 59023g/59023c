@@ -22,4 +22,4 @@ ADD . /src
 
 EXPOSE  8080
 
-CMD ["nodemon", "-L", "/src/index.js"]
+CMD ["NODE_ENV=production", "npm", "start"]
