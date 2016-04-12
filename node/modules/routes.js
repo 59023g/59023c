@@ -13,9 +13,9 @@ import Posts from './Posts'
 module.exports = (
   <Route path="/" component={App}>
     <IndexRoute component={Home}/>
-      <Route path="/:userName/meta" component={Meta}>
-        <Route path="/:userName/meta/posts" component={Posts}/>
-        <Route path="/:userName/meta/posts/:post" component={Post}/>
+      <Route path="/:userName/meta" component={Meta}/>
+      <Route path="/:userName/posts" component={Posts}>
+        <Route path="/:userName/posts/:post" component={Post}/>
       </Route>
     <Route path="/about" component={About}/>
   </Route>
