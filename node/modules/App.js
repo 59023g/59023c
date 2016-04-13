@@ -41,8 +41,8 @@ export default React.createClass({
         <ul role="nav">
           <li><NavLink to="/" onlyActiveOnIndex>Home</NavLink></li>
           <li><NavLink to="/about">About</NavLink></li>
-          <li><NavLink to={`/${this.state.user.id}/meta`}>Meta - {this.state.user.id}</NavLink></li>
-          <li><NavLink to={`/${this.state.user.id}/posts`}>Posts</NavLink></li>
+          <li><NavLink to={`/${Auth.user.id}/meta`}>Meta - {Auth.user.id}</NavLink></li>
+          <li><NavLink to={`/${Auth.user.id}/posts`}>Posts</NavLink></li>
         </ul>
         {this.props.children}
       </div>
