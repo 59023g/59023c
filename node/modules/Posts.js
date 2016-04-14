@@ -2,12 +2,16 @@ import React from 'react'
 import NavLink from './NavLink'
 
 export default React.createClass({
-  contextTypes: {
-    router: React.PropTypes.object
-  },
+  // getInitialState() { null },
+  componentDidMount() {},
+    contextTypes: {
+      router: React.PropTypes.object
+    },
 
-  handleSubmit(event) {
-    // event.preventDefault()
+  createPost(event) {
+    event.preventDefault()
+    console.log(event)
+
     // const userName = event.target.elements[0].value
     // const postTitle = event.target.elements[1].value
     // const path = `/meta/posts/${userName}/${postTitle}`
@@ -19,19 +23,19 @@ export default React.createClass({
       <div>
         <h2>Posts</h2>
         <ul>
-          <li><NavLink to="/:userName/meta/posts/post1">Post1</NavLink></li>
-          <li><NavLink to="/:userName/meta/posts/post2">Post2</NavLink></li>
           {/* Need to loop of all projects
-          {PROJECTS.map(project => (
+          {posts.map(project => (
               <li key={project.id}>
                   <Project project={project} />
               </li>
           ))}*/}
           <li>
-            <form onSubmit={this.handleSubmit}>
-              <input type="text" placeholder="userName"/> / {' '}
-              <input type="text" placeholder="postTitle"/>{' '}
-              <button type="submit">Go</button>
+            <form onSubmit={this.createPost}>
+              <input type="text" placeholder="title" className="mb-12"/> {' '}
+              <textarea placeholder="content" className="mb-12 h-200">{}</textarea>
+              <textarea placeholder="abstract" className="mb-12">{}</textarea>
+              <input type="text" placeholder="tags" className="mb-12"/> {' '}
+              <button type="submit"><h3>POST</h3></button>
             </form>
           </li>
         </ul>
