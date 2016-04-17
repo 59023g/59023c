@@ -8,6 +8,7 @@ import About from './About'
 import Meta from './Meta'
 import Post from './Post'
 import Posts from './Posts'
+import NotFound from './404'
 
 
 module.exports = (
@@ -18,5 +19,6 @@ module.exports = (
         <Route path="/:userName/posts/:post" component={Post}/>
       </Route>
     <Route path="/about" component={About}/>
+    <Route path="*" component={NotFound} />
   </Route>
 )
