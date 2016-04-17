@@ -11,7 +11,6 @@ export default React.createClass({
   getInitialState() {
     return {
       user: null,
-      url: null,
       title: null,
       content: null,
       abstract: null,
