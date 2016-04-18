@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import NavLink from './NavLink'
+import Auth from './Auth'
 
 export default React.createClass({
 
@@ -10,7 +11,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      user: null,
+      user: Auth.user.id,
       title: null,
       content: null,
       abstract: null,
@@ -37,7 +38,11 @@ export default React.createClass({
     var nextState = {};
     nextState[e.target.name] = e.target.value;
     console.log(nextState)
-    this.setState(nextState);
+
+    this.setState(nextState, () => {
+      this.state.updated_at = Date.now()
+      this.state.tags = this.state.tags.split(' ')
+    });
   },
   render() {
     return (
@@ -81,6 +86,8 @@ export default React.createClass({
               <button type="submit"><h3>POST</h3></button>
             </form>
           </li>
+          <li>updated_at: {this.state.updated_at}</li>
+          <li>tags: {this.state.tags}</li>
         </ul>
         {this.props.children}
       </div>
