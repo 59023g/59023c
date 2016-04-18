@@ -19,10 +19,10 @@ export default React.createClass({
       updated_at: null
     }
   },
-  componentDidMount() {},
-    contextTypes: {
-      router: React.PropTypes.object
-    },
+  // componentDidMount() {},
+  //   contextTypes: {
+  //     router: React.PropTypes.object
+  //   },
 
   createPost(e) {
     e.preventDefault()
