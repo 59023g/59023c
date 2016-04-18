@@ -33,15 +33,26 @@ export default React.createClass({
     // const path = `/meta/posts/${userName}/${postTitle}`
     // this.context.router.push(path)
   },
+  componentWillUpdate(){
+
+  },
+  componentWillReceiveProps() {
+    // probably auth stuff in here
+  },
   handleChange(e) {
-    console.log(e.target.value)
-    var nextState = {};
-    nextState[e.target.name] = e.target.value;
-    console.log(nextState)
+    let nextState = {},
+        targetName = e.target.name
+
+    nextState[targetName] = e.target.value;
 
     this.setState(nextState, () => {
       this.state.updated_at = Date.now()
-      this.state.tags = this.state.tags.split(' ')
+
+      // todo - these both seems rudimentary - move to component will update?
+      this.state.url = '/' + this.state.title.split(' ').join('-')
+      if(targetName === 'tags') {
+        this.state.tags = this.state.tags.split(' ')
+      }
     });
   },
   render() {
@@ -88,6 +99,7 @@ export default React.createClass({
           </li>
           <li>updated_at: {this.state.updated_at}</li>
           <li>tags: {this.state.tags}</li>
+          <li>url: {this.state.url}</li>
         </ul>
         {this.props.children}
       </div>
