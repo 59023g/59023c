@@ -7,8 +7,6 @@ export default React.createClass({
   propTypes: {
     post: PropTypes.object
   },
-
-
   getInitialState() {
     return {
       user: Auth.user.id,
@@ -27,6 +25,7 @@ export default React.createClass({
   createPost(e) {
     e.preventDefault()
     console.log(this.state)
+    store.dispatch(this.state)
 
     // const userName = event.target.elements[0].value
     // const postTitle = event.target.elements[1].value

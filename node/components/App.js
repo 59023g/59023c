@@ -1,6 +1,6 @@
 import React from 'react'
 import NavLink from './NavLink'
-import Auth from './Auth.js'
+import Auth from './Auth'
 
 var user
 //https://github.com/reactjs/react-router/blob/master/examples/passing-props-to-children/app.js#L48
