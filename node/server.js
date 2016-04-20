@@ -5,10 +5,11 @@ import compression from 'compression'
 import redis from 'redis'
 
 import React from 'react'
+
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 
-import routes from './modules/routes'
+import routes from './components/routes'
 import index from './server_index.js'
 
 var app = express()
