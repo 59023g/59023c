@@ -1,6 +1,14 @@
 
 body {
+  /*background: rgb(251, 254, 255)*/
+}
 
+a, a:-webkit-any-link {
+  color: rgb(25, 42, 113);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline
 }
 
 h1, h2 {
@@ -24,17 +32,16 @@ textarea, input {
   box-shadow: none;
 }
 button {
-  hover
   border-radius: 0;
   background: white;
-  border: 1px solid;
+  border:   1px solid rgb(238,238,238);
   outline: 0;
   -webkit-appearance: none;
   width: 100%
 }
 button:hover {
   cursor: pointer;
-  background: black;
+  background: rgb(25, 42, 113);
   color: white;
 }
 .mb-12 {
