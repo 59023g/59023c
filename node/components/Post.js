@@ -5,18 +5,18 @@ export default React.createClass({
     user: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
     content: React.PropTypes.string.isRequired,
-    abstract: React.PropTypes.string.isRequired,
-    tags: React.PropTypes.array.isRequired,
-    updated_at: React.PropTypes.string.isRequired,
+    abstract: React.PropTypes.string,
+    tags: React.PropTypes.array,
+    updated_at: React.PropTypes.number.isRequired,
   },
   render: function() {
     return (
       <li>
-        <h2 value="this.props.title"></h2>
-        <p value="this.props.content"></p>
-        <p value="this.props.abstract"></p>
-        <p value="this.props.tags"></p>
-        <p value="this.props.updated_at"></p>
+        <h2>{this.props.title}</h2>
+        <p>{this.props.content}</p>
+        <p>{this.props.abstract}</p>
+        <p>{this.props.tags}</p>
+        <p>{this.props.updated_at}</p>
       </li>
     )
   }
