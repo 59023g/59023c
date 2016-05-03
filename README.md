@@ -1,4 +1,4 @@
-# 59023c - WIP
+## 59023c - WIP
 Web app for basic CRUD
 
 dependencies:
@@ -10,5 +10,3 @@ if no machine has been built: `docker-machine create --driver virtualbox name`
 else: `docker-machine start default`  
 
 `docker-compose up`
-
-
