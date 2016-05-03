@@ -9,18 +9,18 @@ export default React.createClass({
     tags: React.PropTypes.array,
     updated_at: React.PropTypes.number.isRequired,
   },
-  rawMarkup: function(value) {
-    return { __html: value };
+  rawMarkup: function (value) {
+    return { __html: value }
   },
-  render: function() {
+  render: function () {
     return (
-      <li>
-        <h2 dangerouslySetInnerHTML={this.rawMarkup(this.props.title)} ></h2>
-        <p dangerouslySetInnerHTML={this.rawMarkup(this.props.content)}></p>
-        <p dangerouslySetInnerHTML={this.rawMarkup(this.props.abstract)}></p>
-        <p dangerouslySetInnerHTML={this.rawMarkup(this.props.tags)}></p>
-        <p dangerouslySetInnerHTML={this.rawMarkup(this.props.updated_at)}></p>
-      </li>
+    <li>
+      <h2 dangerouslySetInnerHTML={this.rawMarkup(this.props.title)}></h2>
+      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.content)}></p>
+      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.abstract)}></p>
+      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.tags)}></p>
+      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.updated_at)}></p>
+    </li>
     )
   }
 })
