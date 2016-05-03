@@ -2,13 +2,18 @@ import React, { PropTypes } from 'react'
 import Auth from './Auth'
 
 import PostForm from './PostForm'
+import Post from './Post'
+
 import { newPost, Posts } from '../sweetData.js'
 
 
 
 export default React.createClass({
 
-
+  PropTypes: {
+    newPost: React.PropTypes.object.isRequired,
+    posts: React.PropTypes.array
+  },
   // getInitialState() {
   // },
 
@@ -45,6 +50,9 @@ export default React.createClass({
     });
   },
   render() {
+    var postItems = this.props.posts
+      postItems.map(function(post) { return React.createElement(Post, post)})
+
     return (
       <div>
         <h2>Posts</h2>
@@ -53,6 +61,9 @@ export default React.createClass({
           onChange={this.onChange}
           onSubmit={this.onSubmit}
         />
+        <ul>
+          {this.postItems}
+        </ul>
       </div>
     )
   }

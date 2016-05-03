@@ -40,10 +40,11 @@ export default React.createClass({
               <button type="submit"><h3>POST</h3></button>
             </form>
           </li>
-          <li>updated_at: {this.props.value.updated_at}</li>
-          <li>tags: {this.props.value.tags}</li>
-          <li>url: {this.props.value.url}</li>
         </ul>
     )
   }
 })
+
+/*<li>updated_at: {this.props.value.updated_at}</li>
+<li>tags: {this.props.value.tags}</li>
+<li>url: {this.props.value.url}</li>*/
