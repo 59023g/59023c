@@ -4,7 +4,7 @@ import Auth from './Auth'
 import PostForm from './PostForm'
 import Post from './Post'
 
-import { newPost, Posts } from '../sweetData.js'
+import { newPost, posts } from '../sweetData.js'
 
 
 
@@ -50,9 +50,6 @@ export default React.createClass({
     });
   },
   render() {
-    var postItems = this.props.posts
-      postItems.map(function(post) { return React.createElement(Post, post)})
-
     return (
       <div>
         <h2>Posts</h2>
@@ -62,7 +59,18 @@ export default React.createClass({
           onSubmit={this.onSubmit}
         />
         <ul>
-          {this.postItems}
+          {posts.map(function(post, index) {
+            return (
+              <Post key={index}
+                    user={post.user}
+                    title={post.title}
+                    content={post.content}
+                    abstract={post.abstract}
+                    tags={post.tags}
+                    updated_at={post.updated_at}
+              />)
+            })
+          }
         </ul>
       </div>
     )
