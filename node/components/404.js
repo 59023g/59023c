@@ -1,7 +1,9 @@
-import React from 'react';
+import React from 'react'
 
 export default React.createClass({
   render() {
-    return <div>404</div>
+    return <div>
+             404
+           </div>
   }
 })

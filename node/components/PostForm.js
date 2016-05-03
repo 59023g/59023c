@@ -8,39 +8,43 @@ export default React.createClass({
   },
   render() {
     return (
-        <ul>
-          <li>
-            <form onSubmit={this.props.onSubmit} >
-              <input type="text"
-                placeholder="title"
-                className="mb-12"
-                name="title"
-                value={this.props.value.title}
-                onChange={this.props.onChange}
-                />
-              <textarea placeholder="content"
-                className="mb-12 h-200"
-                name="content"
-                value={this.props.value.content}
-                onChange={this.props.onChange}>
-              </textarea>
-              <textarea placeholder="abstract"
-                className="mb-12"
-                name="abstract"
-                value={this.props.value.abstract}
-                onChange={this.props.onChange}>
-              </textarea>
-              <input type="text"
-                placeholder="tags"
-                className="mb-12"
-                name="tags"
-                value={this.props.value.tags}
-                onChange={this.props.onChange}
-              />
-              <button type="submit"><h3>POST</h3></button>
-            </form>
-          </li>
-        </ul>
+    <ul>
+      <li>
+        <form onSubmit={this.props.onSubmit}>
+          <input
+            type="text"
+            placeholder="title"
+            className="mb-12"
+            name="title"
+            value={this.props.value.title}
+            onChange={this.props.onChange} />
+          <textarea
+            placeholder="content"
+            className="mb-12 h-200"
+            name="content"
+            value={this.props.value.content}
+            onChange={this.props.onChange}>
+          </textarea>
+          <textarea
+            placeholder="abstract"
+            className="mb-12"
+            name="abstract"
+            value={this.props.value.abstract}
+            onChange={this.props.onChange}>
+          </textarea>
+          <input
+            type="text"
+            placeholder="tags"
+            className="mb-12"
+            name="tags"
+            value={this.props.value.tags}
+            onChange={this.props.onChange} />
+          <button type="submit">
+            <h3>POST</h3>
+          </button>
+        </form>
+      </li>
+    </ul>
     )
   }
 })

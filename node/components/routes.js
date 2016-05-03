@@ -10,15 +10,14 @@ import PostForm from './PostForm'
 import Posts from './Posts'
 import NotFound from './404'
 
-
 module.exports = (
   <Route path="/" component={App}>
-    <IndexRoute component={Home}/>
-      <Route path="/:userName/meta" component={Meta}/>
-      <Route path="/:userName/posts" component={Posts}>
-        <Route path="/:userName/posts/:post" component={PostForm}/>
-      </Route>
-    <Route path="/about" component={About}/>
+    <IndexRoute component={Home} />
+    <Route path="/:userName/meta" component={Meta} />
+    <Route path="/:userName/posts" component={Posts}>
+      <Route path="/:userName/posts/:post" component={PostForm} />
+    </Route>
+    <Route path="/about" component={About} />
     <Route path="*" component={NotFound} />
   </Route>
 )

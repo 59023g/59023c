@@ -18,16 +18,33 @@ export default React.createClass({
   },
   render() {
     return (
-      <div>
-        <h1>MEP.IM</h1>
-        <ul role="nav">
-          <li><NavLink to="/" onlyActiveOnIndex>Home</NavLink></li>
-          <li><NavLink to="/about">About</NavLink></li>
-          <li><NavLink to={`/${Auth.user.id}/meta`}>Meta - {Auth.user.id}</NavLink></li>
-          <li><NavLink to={`/${Auth.user.id}/posts`}>Posts</NavLink></li>
-        </ul>
-        {this.props.children}
-      </div>
+    <div>
+      <h1>MEP.IM</h1>
+      <ul role="nav">
+        <li>
+          <NavLink to="/" onlyActiveOnIndex>
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/about">
+            About
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={`/${Auth.user.id}/meta`}>
+            Meta -
+            {Auth.user.id}
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={`/${Auth.user.id}/posts`}>
+            Posts
+          </NavLink>
+        </li>
+      </ul>
+      {this.props.children}
+    </div>
     )
   }
 })

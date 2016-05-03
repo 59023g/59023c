@@ -1,5 +1,3 @@
-
-
 // Redux - do not see use for it now
 // import { Provider } from 'react-redux'
 // import { createStore } from 'redux'
@@ -16,8 +14,8 @@ import App from './components/App'
 import routes from './components/routes'
 
 render(
-    <Router routes={routes} history={browserHistory}>
-      <App />
-    </Router>,
+  <Router routes={routes} history={browserHistory}>
+    <App />
+  </Router>,
   document.getElementById('app')
 )
