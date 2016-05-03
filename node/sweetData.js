@@ -1,7 +1,7 @@
 import Auth from './components/Auth'
 
 
-var newPost = {
+export var newPost = {
   user: Auth.user.id,
   title: null,
   content: null,
@@ -10,7 +10,7 @@ var newPost = {
   updated_at: null
 }
 
-var Posts = [{
+export var posts = [{
   id: 1,
   user: "Michael",
   title: "The first blog <h1>Post</h1>",
@@ -35,5 +35,3 @@ var Posts = [{
   tags: ["trade", "free", "awesome"],
   updated_at: Date.now()
 }]
-
-export { newPost, Posts }
