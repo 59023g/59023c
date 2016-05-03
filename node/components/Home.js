@@ -13,6 +13,7 @@ export default React.createClass({
       {posts.map(function (post, index) {
          return (
          <Post
+           key={index}   
            user={post.user}
            title={post.title}
            content={post.content}
