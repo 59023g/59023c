@@ -8,7 +8,7 @@ module.exports = (
     <meta name="viewport" content="width=device-width, user-scalable=no">
   </head>
   <body>
-    <div id=app></div>
+    <div id="app-container"></div>
     <script src="./59023c.min.js"></script>
   </body>
 </html>
