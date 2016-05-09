@@ -4,7 +4,6 @@ import Auth from './Auth'
 import PostForm from './PostForm'
 import Post from './Post'
 
-import { newPost, posts } from '../sweetData.js'
 
 export default React.createClass({
   PropTypes: {
