@@ -10,12 +10,51 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import { Router, browserHistory } from 'react-router'
+
 import App from './components/App'
 import routes from './components/routes'
 
-render(
-  <Router routes={routes} history={browserHistory}>
-    <App />
-  </Router>,
-  document.getElementById('app-container')
-)
+import { newPost, posts } from './sweetData.js'
+
+
+var state = {};
+
+function setState(changes) {
+  Object.assign(state, changes);
+  console.log(state)
+
+  render(
+    <Router routes={routes} history={browserHistory}>
+      <App state={state}
+           onNewPostSubmit={this.submitNewPost}
+           onNewPostChange={this.updateNewPost}
+      />
+    </Router>,
+    document.getElementById('app-container')
+  )
+}
+
+setState({
+  posts: posts,
+  newPost: newPost
+})
+
+function submitNewPost(post) {
+  setState({ newPost: post });
+}
+
+
+function updateNewPost() {
+  var post = Object.assign({}, state.newPost, {key: state.posts.length + 1, errors: {}});
+
+  if (post.user && post.title) {
+    setState(
+      Object.keys(contact.errors).length === 0
+      ? {
+          newPost: Object.assign({}, POST_TEMPLATE),
+          posts: state.posts.slice(0).concat(post),
+        }
+      : { newPost: post }
+    );
+  }
+}
