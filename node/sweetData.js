@@ -1,4 +1,4 @@
-import Auth from './components/Auth'
+import Auth from './lib/components/Auth'
 
 
 export var newPost = {

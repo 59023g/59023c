@@ -14,21 +14,22 @@ import { Router, browserHistory } from 'react-router'
 import App from './components/App'
 import routes from './components/routes'
 
-import { newPost, posts } from './sweetData.js'
+import { newPost, posts } from '../sweetData.js'
 
 
 var state = {};
 
 function setState(changes) {
   Object.assign(state, changes);
-  console.log(state)
 
   render(
-    <Router routes={routes} history={browserHistory}>
-      <App state={state}
-           onNewPostSubmit={this.submitNewPost}
-           onNewPostChange={this.updateNewPost}
-      />
+    <Router
+         routes={routes}
+         history={browserHistory}
+         {...state}
+         onNewPostSubmit={submitNewPost}
+         onNewPostChange={updateNewPost}>
+      <App foo="bar"/>
     </Router>,
     document.getElementById('app-container')
   )
@@ -38,6 +39,7 @@ setState({
   posts: posts,
   newPost: newPost
 })
+
 
 function submitNewPost(post) {
   setState({ newPost: post });

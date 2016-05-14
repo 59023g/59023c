@@ -4,5 +4,6 @@ node/node_modules
 libs.js
 redis/data
 npm-debug.log
-node/api_draft.json
 
+.DS_Store
+node/misc

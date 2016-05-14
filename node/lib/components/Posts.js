@@ -4,7 +4,6 @@ import Auth from './Auth'
 import PostForm from './PostForm'
 import Post from './Post'
 
-
 export default React.createClass({
   PropTypes: {
     newPost: React.PropTypes.object.isRequired,
@@ -42,12 +41,14 @@ export default React.createClass({
     })
   },
   render() {
+    console.log(this.props)
+
     return (
     <div>
       <h2>Posts</h2>
-      <PostForm value={newPost} onChange={this.onChange} onSubmit={this.onSubmit} />
+      <PostForm value={this.props.newPost} onChange={this.onChange} onSubmit={this.onSubmit} />
       <ul>
-        {posts.map(function (post, index) {
+        {this.props.posts.map(function (post, index) {
            return (
            <Post
              key={index}
