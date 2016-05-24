@@ -1,16 +1,15 @@
-var path = require('path');
+// var path = require('path');
 var webpack = require('webpack')
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  // devtool: 'cheap-module-eval-source-map',
   entry: [
-        'babel-polyfill',
   './lib/index'],
 
   output: {
     path: 'public',
     filename: '59023c.min.js',
-    publicPath: '/'
+    publicPath: '/public/'
   },
 
   plugins: process.env.NODE_ENV === 'production' ? [
@@ -23,9 +22,9 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      loader: 'babel',
+      loader: 'babel-loader',
       query: {
-        presets: ['react', 'es2015']
+        presets: ['es2015', 'react', 'stage-0']
       }
     }]
   }

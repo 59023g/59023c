@@ -1,37 +1,37 @@
 import Auth from './lib/components/Auth'
 
 
-export var newPost = {
+export const newPost = {
   user: Auth.user.id,
   title: null,
   content: null,
   abstract: null,
   tags: [],
-  updated_at: null
+  updatedAt: null
 }
 
-export var posts = [{
+export const posts = [{
   id: 1,
-  user: "Michael",
-  title: "The first blog <h1>Post</h1>",
-  content: "Very excellent <h1>Post</h1> Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through",
-  abstract: "Who needs Abstract?",
-  tags: ["trade", "free", "awesome"],
-  updated_at: Date.now()
+  user: 'Michael',
+  title: 'The first blog <h1>Post</h1>',
+  content: 'Very excellent <h1>Post</h1> Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through',
+  abstract: 'Who needs Abstract?',
+  tags: ['trade', 'free', 'awesome'],
+  updatedAt: Date.now()
 }, {
   id: 2,
-  user: "James",
-  title: "The Second blog Post",
-  content: "Very excellent <h1>Post</h1> Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going ",
-  abstract: "Who needs Abstract?",
-  tags: ["trade", "free", "awesome"],
-  updated_at: Date.now()
+  user: 'James',
+  title: 'The Second blog Post',
+  content: 'Very excellent <h1>Post</h1> Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going ',
+  abstract: 'Who needs Abstract?',
+  tags: ['trade', 'free', 'awesome'],
+  updatedAt: Date.now()
 }, {
   id: 3,
-  user: "Colin",
-  title: "The third blog ",
-  content: "PostHampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage",
-  abstract: "Who needs Abstract?",
-  tags: ["trade", "free", "awesome"],
-  updated_at: Date.now()
+  user: 'Colin',
+  title: 'The third blog ',
+  content: 'PostHampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage',
+  abstract: 'Who needs Abstract?',
+  tags: ['trade', 'free', 'awesome'],
+  updatedAt: Date.now()
 }]

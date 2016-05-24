@@ -1,4 +1,5 @@
 /* global __DEVTOOLS__ */
+/* Root */
 
 import React, { PropTypes } from 'react'
 import { Redirect, Route } from 'react-router'
@@ -10,7 +11,6 @@ import * as storage from './persistence/storage'
 import * as components from './components'
 import * as constants from './constants'
 import * as i18n from './i18n'
-
 
 const {
   About,

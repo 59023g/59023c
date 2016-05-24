@@ -1,13 +1,13 @@
 import React from 'react'
 // import { defineMessages, FormattedMessage } from 'react-intl'
 
-const messages = defineMessages({
+const messages = {
   builtWith: {
     id: 'footer.builtWith',
     description: 'Mention how the site is built with',
     defaultMessage: 'This site is built with <3 using {link}'
   }
-})
+}
 
 export default class Footer extends React.Component {
 

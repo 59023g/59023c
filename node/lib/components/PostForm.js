@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react'
 
 export default React.createClass({
   propTypes: {
-    value: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired
+    value: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired
   },
-  render() {
+  render () {
     return (
     <ul>
       <li>

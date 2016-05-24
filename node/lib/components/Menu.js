@@ -38,6 +38,8 @@ class Menu extends React.Component {
           <ul className="pure-menu-list">
             {menuItems.map((item, i) => <MenuListItem {...item} key={i} />)}
           </ul>
+
+          {locale}
         </div>
       </div>
     )
