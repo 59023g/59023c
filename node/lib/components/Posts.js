@@ -1,25 +1,22 @@
 import React, { PropTypes } from 'react'
-import Auth from './Auth'
 
 import PostForm from './PostForm'
 import Post from './Post'
 
-export default React.createClass({
-  PropTypes: {
-    newPost: React.PropTypes.object.isRequired,
-    posts: React.PropTypes.array
-  },
-  // getInitialState() {
-  // },
+export default class Posts extends React.Component {
+  static propTypes = {
+    newPost: PropTypes.object.isRequired,
+    posts: PropTypes.array
+  }
 
   onSubmit (e) {
     e.preventDefault()
     console.log(this.state)
-  },
-  componentWillUpdate () {},
+  }
+  componentWillUpdate () {}
   componentWillReceiveProps () {
-    // probably auth stuff in here
-  },
+  }
+
   onChange (e) {
     console.log(e.target.value)
 
@@ -29,26 +26,29 @@ export default React.createClass({
     nextState[targetName] = e.target.value
 
     this.setState(nextState, () => {
-      this.state.updated_at = Date.now()
+      this.state.updatedAt = Date.now()
 
       // todo - these both seems rudimentary - move to component will update?
-      if (targetName === 'title') {
+      if (targetName === 'title')
         this.state.url = '/' + this.state.title.split(' ').join('-')
-      }
-      if (targetName === 'tags') {
+
+      if (targetName === 'tags')
         this.state.tags = this.state.tags.split(' ')
-      }
+
     })
-  },
+  }
   render () {
-    console.log(this.props)
+    let posts = this.props.posts
 
     return (
     <div>
       <h2>Posts</h2>
-      <PostForm value={this.props.newPost} onChange={this.onChange} onSubmit={this.onSubmit} />
+      <PostForm
+        value={this.props.newPost}
+        onChange={this.onChange}
+        onSubmit={this.onSubmit} />
       <ul>
-        {this.props.posts.map(function (post, index) {
+        {posts.map(function (post, index) {
           return (
            <Post
              key={index}
@@ -57,10 +57,10 @@ export default React.createClass({
              content={post.content}
              abstract={post.abstract}
              tags={post.tags}
-             updated_at={post.updated_at} />)
+             updatedAt={post.updatedAt} />)
         })}
       </ul>
     </div>
     )
   }
-})
+}

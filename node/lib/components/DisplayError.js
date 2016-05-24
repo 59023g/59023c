@@ -19,8 +19,7 @@ class DisplayError extends React.Component {
         <div>
           <button
             onClick={hideError}
-            type="button"
-            className="close-button">
+            type="button">
             <i className="fa fa-times-circle" />
           </button>
           <p>{error.message}</p>

@@ -1,27 +1,18 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import NavLink from './NavLink'
 import Auth from './Auth'
 
-var user
+export default class App extends React.Component {
 
-export default React.createClass({
-  // PropTypes: {
-  //   newPost: React.PropTypes.object.isRequired,
-  //   posts: React.PropTypes.array,
-  //   onNewPostSubmit: React.PropTypes.func
-  // },
-  // getInitialState() {
-  //   return {
-  //     user: {
-  //       fullName: Auth.user.fullName,
-  //       id: Auth.user.id
-  //     }
-  //   }
-  // },
+  static propTypes = {
+    children: PropTypes.any
+  };
+
   componentDidMount () {
     console.log('state mount', this.state)
     console.log('state mount', this.props)
-  },
+  }
+
   render () {
     return (
       <div>
@@ -53,4 +44,4 @@ export default React.createClass({
       </div>
     )
   }
-})
+}

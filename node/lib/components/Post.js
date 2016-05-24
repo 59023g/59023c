@@ -2,12 +2,12 @@ import React, { PropTypes } from 'react'
 
 export default React.createClass({
   propTypes: {
-    user: React.PropTypes.string.isRequired,
-    title: React.PropTypes.string.isRequired,
-    content: React.PropTypes.string.isRequired,
-    abstract: React.PropTypes.string,
-    tags: React.PropTypes.array,
-    updated_at: React.PropTypes.number.isRequired,
+    user: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    abstract: PropTypes.string,
+    tags: PropTypes.array,
+    updatedAt: PropTypes.number.isRequired,
   },
   rawMarkup: function (value) {
     return { __html: value }
@@ -19,7 +19,7 @@ export default React.createClass({
       <p dangerouslySetInnerHTML={this.rawMarkup(this.props.content)}></p>
       <p dangerouslySetInnerHTML={this.rawMarkup(this.props.abstract)}></p>
       <p dangerouslySetInnerHTML={this.rawMarkup(this.props.tags)}></p>
-      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.updated_at)}></p>
+      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.updatedAt)}></p>
     </li>
     )
   }
