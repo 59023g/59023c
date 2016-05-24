@@ -12,15 +12,15 @@ export default React.createClass({
   // getInitialState() {
   // },
 
-  onSubmit(e) {
+  onSubmit (e) {
     e.preventDefault()
     console.log(this.state)
   },
-  componentWillUpdate() {},
-  componentWillReceiveProps() {
+  componentWillUpdate () {},
+  componentWillReceiveProps () {
     // probably auth stuff in here
   },
-  onChange(e) {
+  onChange (e) {
     console.log(e.target.value)
 
     let nextState = {},
@@ -40,7 +40,7 @@ export default React.createClass({
       }
     })
   },
-  render() {
+  render () {
     console.log(this.props)
 
     return (
@@ -49,7 +49,7 @@ export default React.createClass({
       <PostForm value={this.props.newPost} onChange={this.onChange} onSubmit={this.onSubmit} />
       <ul>
         {this.props.posts.map(function (post, index) {
-           return (
+          return (
            <Post
              key={index}
              user={post.user}
@@ -58,7 +58,7 @@ export default React.createClass({
              abstract={post.abstract}
              tags={post.tags}
              updated_at={post.updated_at} />)
-         })}
+        })}
       </ul>
     </div>
     )

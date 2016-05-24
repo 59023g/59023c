@@ -4,6 +4,6 @@ export default React.createClass({
   propTypes: {
     post: React.PropTypes.array.isRequired
   },
-  render() {}
+  render () {}
 
 })

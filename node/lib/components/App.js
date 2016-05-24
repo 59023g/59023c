@@ -18,11 +18,11 @@ export default React.createClass({
   //     }
   //   }
   // },
-  componentDidMount() {
+  componentDidMount () {
     console.log('state mount', this.state)
     console.log('state mount', this.props)
   },
-  render() {
+  render () {
     return (
       <div>
         <h1>MEP.IM</h1>

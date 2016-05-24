@@ -2,10 +2,10 @@ import React from 'react'
 import NavLink from './NavLink'
 
 export default React.createClass({
-  componentDidMount() {
+  componentDidMount () {
     console.log(this.props)
   },
-  render() {
+  render () {
     return (
     <div>
       <h2>Meta</h2>

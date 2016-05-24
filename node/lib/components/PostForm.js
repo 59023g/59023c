@@ -6,7 +6,7 @@ export default React.createClass({
     onChange: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func.isRequired
   },
-  render() {
+  render () {
     return (
     <ul>
       <li>
