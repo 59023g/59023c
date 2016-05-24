@@ -1,7 +1,11 @@
+var path = require('path');
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './lib/index',
+  devtool: 'cheap-module-eval-source-map',
+  entry: [
+        'babel-polyfill',
+  './lib/index'],
 
   output: {
     path: 'public',
@@ -19,9 +23,9 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      loader: 'babel-loader',
+      loader: 'babel',
       query: {
-        presets: ['es2015', 'react']
+        presets: ['react', 'es2015']
       }
     }]
   }
