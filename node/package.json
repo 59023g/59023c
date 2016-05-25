@@ -8,8 +8,8 @@
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "clean": "rimraf public",
-    "start:dev": "npm run clean && npm run lint && webpack && webpack-dev-server --inline --content-base public/ --history-api-fallback ",
-    "start:prod": "npm run build && node 59023c.server.min.js",
+    "start:dev": "npm run clean && npm run lint && npm run build &&  DEVTOOLS=true node 59023c.server.min.js",
+    "start:prod": "npm run build && DEVTOOLS=true node 59023c.server.min.js",
     "build:client": "webpack",
     "lint": "eslint lib",
     "build:server": "webpack --config webpack.server.config.js",

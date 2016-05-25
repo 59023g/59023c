@@ -27,6 +27,10 @@ class Menu extends React.Component {
     this.handleLanguageSwitch = this.handleLanguageSwitch.bind(this)
   }
 
+  handleLanguageSwitch (evt) {
+    this.props.switchLocale(evt.target.value)
+  }
+
   render () {
     const { application: { locale } } = this.props
 
@@ -38,8 +42,16 @@ class Menu extends React.Component {
           <ul className="pure-menu-list">
             {menuItems.map((item, i) => <MenuListItem {...item} key={i} />)}
           </ul>
-
-          {locale}
+          <form className="pure-form language-switcher">
+            <fieldset>
+              <select ref="langSwitcher" value={locale}
+                onChange={this.handleLanguageSwitch}>
+                <option value="en">EN</option>
+                <option value="de">DE</option>
+                <option value="it">IT</option>
+              </select>
+            </fieldset>
+          </form>
         </div>
       </div>
     )

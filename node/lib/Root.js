@@ -1,5 +1,4 @@
 /* global __DEVTOOLS__ */
-/* Root */
 
 import React, { PropTypes } from 'react'
 import { Redirect, Route } from 'react-router'

@@ -9,7 +9,8 @@ module.exports = (
   </head>
   <body>
     <div id="app-container"></div>
-    <script src="./59023c.min.js"></script>
+    <span>test</span>
+    <script src="/59023c.min.js"></script>
   </body>
 </html>
 `
