@@ -13,8 +13,8 @@ import * as i18n from './i18n'
 
 const {
   About,
-  Account,
-  AccountHome,
+  // Account,
+  MetaHome,
   Application,
   GithubStargazers,
   GithubRepo,
@@ -57,17 +57,17 @@ function renderRoutes () {
     <ReduxRouter>
       <Route component={Application}>
         <Route path="/" component={Home} />
-        <Redirect from="/account" to="/account/profile" />
         <Route path="stargazers" component={GithubStargazers}>
           <Route path=':username/:repo' component={GithubRepo} />
           <Route path=':username' component={GithubUser} />
         </Route>
-        <Route path="about" component={About} />
-        <Route path="account" component={Account} onEnter={requireAuth}>
-          <Route path="profile" component={AccountHome} />
+        // <Route path="about" component={About} />
+        <Route path="meta" component={MetaHome} onEnter={requireAuth}>
           <Route path="secret-area" component={SuperSecretArea} />
         </Route>
-        <Route path="login" component={Login} />
+        <Redirect from="/login" to="/meta/login" />
+
+        <Route path="/meta/login" component={Login} />
         <Route path="logout" onEnter={logout} />
       </Route>
     </ReduxRouter>
