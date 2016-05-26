@@ -1,15 +1,15 @@
-// var path = require('path');
+var path = require('path');
 var webpack = require('webpack')
 
 module.exports = {
   // devtool: 'cheap-module-eval-source-map',
-  entry: [
-  './lib/index'],
-
+  entry: {
+    app: ['./lib/index']
+  },
   output: {
-    path: 'public',
-    filename: '59023c.min.js',
-    publicPath: '/public/'
+    path: path.resolve(__dirname, 'public'),
+    publicPath: '/public/',
+    filename: 'bundle.js'
   },
 
   plugins: process.env.NODE_ENV === 'production' ? [
