@@ -1,13 +1,8 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { defineMessages, FormattedMessage } from 'react-intl'
 
 const messages = defineMessages({
-  accountIntro: {
-    id: 'account.home.intro',
-    description: 'Introduction message of the account home page',
-    defaultMessage: 'Congratulations, you\'ve entered an area secured by login!'
-  },
   accountSteps: {
     id: 'account.home.steps',
     description: 'Introduction message of the account home page',
@@ -21,26 +16,29 @@ const messages = defineMessages({
   }
 })
 
-export default class AccountHome extends React.Component {
+export default class MetaHome extends React.Component {
+  static propTypes = {
+    children: PropTypes.any
+  };
+
   render () {
     const logoutLink = (<Link to="/logout">logout</Link>)
     const secretAreaLink = (
-      <Link to="/account/secret-area">
+      <Link to="/meta/secret-area">
         <FormattedMessage {...messages.accountSuperSecretArea} />
       </Link>)
 
     return (
       <div>
         <div className="header">
-          <h1>Account</h1>
+          <h1>Meta</h1>
         </div>
         <div className="content">
           <p>
-            <FormattedMessage {...messages.accountIntro} />
-            <br/>
             <FormattedMessage {...messages.accountSteps}
               values={{ logoutLink, secretAreaLink }} />
           </p>
+          <div>{this.props.children}</div>
         </div>
       </div>
     )
