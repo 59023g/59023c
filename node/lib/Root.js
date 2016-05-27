@@ -85,7 +85,7 @@ function requireAuth (nextState, replaceState) {
 
 function logout (nextState, replaceState) {
   store.dispatch({ type: constants.LOG_OUT })
-  replaceState({}, '/login')
+  replaceState({}, '/')
 }
 
 class Root extends React.Component {
