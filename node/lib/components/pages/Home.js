@@ -12,7 +12,7 @@ const messages = defineMessages({
     id: 'home.intro',
     description: 'Introductive message about the website',
     defaultMessage: 'This website is a boilerplate example to showcase and ' +
-      'provide best practices around {linkRedux} and {linkRouter}.'
+      'provide best practices around '
   },
   intro2: {
     id: 'home.intro2',
@@ -40,13 +40,10 @@ const messages = defineMessages({
 export default class Home extends React.Component {
 
   render () {
-    const linkRedux = (<a href="https://github.com/gaearon/redux"
-      target="_blank">Redux</a>)
-    const linkRouter = (<a href="https://github.com/rackt/react-router"
-      target="_blank">React Router</a>)
     const linkIssues = (<a
       href="https://github.com/emmenko/redux-react-router-async-example/issues"
       target="_blank"><FormattedMessage {...messages.dropIssue} /></a>)
+
     return (
       <div>
         <div className="header">
@@ -56,7 +53,7 @@ export default class Home extends React.Component {
         </div>
         <div className="content">
           <p>
-            <FormattedMessage {...messages.intro} values={{ linkRedux, linkRouter }} />
+            <FormattedMessage {...messages.intro} />
           </p>
           <p>
             <FormattedMessage {...messages.intro2} values={{ br: (<br/>) }} />

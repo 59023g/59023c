@@ -28,7 +28,7 @@ export default class Login extends React.Component {
     const { history, store } = this.context
     const { location } = this.props
 
-    let nextPath = '/account'
+    let nextPath = '/meta'
     if (location.state && location.state.nextPathname)
       nextPath = location.state.nextPathname
 
@@ -41,26 +41,23 @@ export default class Login extends React.Component {
   render () {
     return (
       <div>
-        <div className="header">
+        <div>
           <h1>Login</h1>
         </div>
-        <div className="content">
+        <div>
           <form
-            className="explore pure-form pure-form-aligned"
             onSubmit={::this.handleSubmit}
             onChange={::this.handleInputChange}>
             <fieldset>
-              <div className="pure-control-group">
+              <div>
                 <label htmlFor="email">Email</label>
                 <input type="email" name="email" defaultValue="foo@bar.com" />
               </div>
-              <div className="pure-control-group">
+              <div>
                 <label htmlFor="password">Password</label>
                 <input type="password" name="password" defaultValue="secret" />
               </div>
-              <button type="submit"
-                className="pure-button pure-button-primary"
-                >Login</button>
+              <button type="submit">Login</button>
             </fieldset>
           </form>
         </div>
