@@ -1,6 +1,39 @@
 /*eslint-disable max-len*/
 import React from 'react'
+import { connect } from 'react-redux'
+
 import { defineMessages, FormattedMessage } from 'react-intl'
+
+import ShortPost from '../ShortPost'
+
+let posts = [{
+  id: 1,
+  user: 'Michael',
+  url: Date.now() + '/the-first-blog-post',
+  title: 'The first blog <h1>Post</h1>',
+  content: 'Very excellent <h1>Post</h1> Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through',
+  abstract: 'Who needs Abstract?',
+  tags: ['trade', 'free', 'awesome'],
+  updatedAt: Date.now()
+}, {
+  id: 2,
+  user: 'James',
+  url: Date.now() + '/the-second-blog-post',
+  title: 'The Second blog Post',
+  content: 'Very excellent <h1>Post</h1> Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going ',
+  abstract: 'Who needs Abstract?',
+  tags: ['trade', 'free', 'awesome'],
+  updatedAt: Date.now()
+}, {
+  id: 3,
+  user: 'Colin',
+  url: Date.now() + '/the-third-blog',
+  title: 'The third blog ',
+  content: 'PostHampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage',
+  abstract: 'Who needs Abstract?',
+  tags: ['trade', 'free', 'awesome'],
+  updatedAt: Date.now()
+}]
 
 const messages = defineMessages({
   welcome: {
@@ -40,9 +73,6 @@ const messages = defineMessages({
 export default class Home extends React.Component {
 
   render () {
-    const linkIssues = (<a
-      href="https://github.com/emmenko/redux-react-router-async-example/issues"
-      target="_blank"><FormattedMessage {...messages.dropIssue} /></a>)
 
     return (
       <div>
@@ -55,14 +85,26 @@ export default class Home extends React.Component {
           <p>
             <FormattedMessage {...messages.intro} />
           </p>
-          <p>
-            <FormattedMessage {...messages.intro2} values={{ br: (<br/>) }} />
-          </p>
-          <p>
-            <FormattedMessage {...messages.intro3} values={{ linkIssues }} />
-          </p>
+          <ul>
+            {posts.map(function (post, index) {
+              return (
+               <ShortPost
+                 key={index}
+                 user={post.user}
+                 title={post.title}
+                 content={post.content}
+                 abstract={post.abstract}
+                 tags={post.tags}
+                 updatedAt={post.updatedAt}
+                 url={post.url}/>)
+            })}
+          </ul>
         </div>
       </div>
     )
   }
 }
+
+export default connect(
+  ({ application }) => ({ application })
+)(Home)
