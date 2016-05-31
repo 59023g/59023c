@@ -33,12 +33,13 @@ export default class Application extends React.Component {
     const { isMenuActive } = this.state
     const activeClass = isMenuActive ? 'active' : ''
 
-    const showMenu = function() {
-      if(loggedIn) {
+    const showMenu = function () {
+      if (loggedIn)
         return (
           <Menu activeClass={activeClass} />
         )
-      }
+      else
+        return undefined
     }
 
 
