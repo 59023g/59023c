@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 
 export default React.createClass({
   propTypes: {
@@ -16,7 +17,9 @@ export default React.createClass({
   render: function () {
     return (
     <li>
-      <h2 dangerouslySetInnerHTML={this.rawMarkup(this.props.title)}></h2>
+      <Link to={this.props.url}>
+        <h2 dangerouslySetInnerHTML={this.rawMarkup(this.props.title)}></h2>
+      </Link>
       <p dangerouslySetInnerHTML={this.rawMarkup(this.props.content)}></p>
       <p dangerouslySetInnerHTML={this.rawMarkup(this.props.abstract)}></p>
       <p dangerouslySetInnerHTML={this.rawMarkup(this.props.tags)}></p>
