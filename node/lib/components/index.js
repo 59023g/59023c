@@ -1,6 +1,5 @@
 export { default as Application } from './Application'
 
-export { default as About } from './pages/About'
 export { default as Account } from './pages/Account'
 export { default as MetaHome } from './pages/MetaHome'
 export { default as Forbidden } from './pages/Forbidden'
