@@ -2,6 +2,11 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as applicationActions from '../actions/application'
 
+var divStyle = {
+  backgroundColor: 'aliceblue',
+  padding: '16px'
+}
+
 class DisplayError extends React.Component {
 
   static propTypes = {
@@ -15,16 +20,16 @@ class DisplayError extends React.Component {
     if (!error) return null
 
     return (
-      <div className="error-message">
+      <div className="error-message" style={divStyle}>
         <div>
+          <p>Hello Dave, You have reached an Error</p>
           <button
             onClick={hideError}
             type="button">
-            <i className="fa fa-times-circle" />
+            <i />
           </button>
-          <p>{error.message}</p>
           <pre>
-            <code>{JSON.stringify(error.body, null, 2)}</code>
+            <code>{JSON.stringify(error, null, 2)}</code>
           </pre>
         </div>
       </div>
