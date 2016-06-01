@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
+
 import Menu from './Menu'
 import Footer from './Footer'
 import DisplayError from './DisplayError'
@@ -45,6 +47,7 @@ export default class Application extends React.Component {
 
     return (
       <div id="layout" className={activeClass}>
+      <Link to="/">Home</Link>
 
         {showMenu()}
 
