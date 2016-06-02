@@ -4,7 +4,7 @@ import handleActionError from '../utils/handle-action-error'
 import processResponse from '../utils/process-response'
 import {
   FETCH_USER,
-  FETCH_REPO,
+  // FETCH_USER_POSTS,
   FETCH_USER_STARGAZERS,
   FETCH_REPO_STARGAZERS
 } from '../constants'
@@ -45,19 +45,19 @@ export function fetchUserStargazers (options) {
   }
 }
 
-export function fetchRepo (options) {
-  const { username, repo } = options
-
-  return dispatch => {
-    fetch(`${GITHUB_API}/repos/${username}/${repo}`)
-    .then(processResponse)
-    .then(res => dispatch({
-      type: FETCH_REPO,
-      repo: res
-    }))
-    .catch(error => handleActionError(dispatch, error, FETCH_REPO))
-  }
-}
+// export function fetchRepo (options) {
+//   const { username, repo } = options
+//
+//   return dispatch => {
+//     fetch(`${GITHUB_API}/repos/${username}/${repo}`)
+//     .then(processResponse)
+//     .then(res => dispatch({
+//       type: FETCH_REPO,
+//       repo: res
+//     }))
+//     .catch(error => handleActionError(dispatch, error, FETCH_REPO))
+//   }
+// }
 
 export function fetchRepoStargazers (options) {
   const { page, username, repo } = options
