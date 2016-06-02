@@ -4,6 +4,8 @@ import createReducer from '../utils/create-reducer'
 const initialState = {
   token: null,
   locale: 'en',
+  id: null,
+  username: null,
   user: {
     // TODO: have a checkbox to update the state
     // e.g.: on the login page and/or menu
@@ -14,7 +16,10 @@ const initialState = {
 }
 
 const actionHandlers = {
-  [constants.LOGGED_IN]: (_, action) => action.payload,
+  [constants.LOGGED_IN]: (_, action) => {
+
+    console.log(action.payload)
+  },
   [constants.LOG_OUT]: () => ({ token: null }),
   [constants.LOCALE_SWITCHED]: (_, action) => ({ locale: action.payload }),
 
@@ -28,8 +33,9 @@ const actionHandlers = {
       // with some user-friendly messages.
       error: {
         source,
-        message: payload.message,
-        statusCode: payload.statusCode || payload.code,
+        message: payload.message || payload.statusText,
+        url: payload.url,
+        statusCode: payload.statusCode || payload.code || payload.status,
         body: payload.body || (payload instanceof Error ?
           (payload.toString() + '\n' + payload.stack) : payload)
       }

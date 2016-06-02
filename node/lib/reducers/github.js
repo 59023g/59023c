@@ -13,8 +13,7 @@ const initialState = {
 
 const actionHandlers = {
   [constants.FETCH_USER]: (state, action) => ({ user: action.user }),
-  [constants.FETCH_REPO]: (state, action) => ({ repo: action.repo }),
-  [constants.FETCH_USER_STARGAZERS]: (state, action) => (
+  [constants.FETCH_USER_POSTS]: (state, action) => (
     {
       stargazers: Object.assign({}, state.stargazers, {
         user: action.stargazers,
