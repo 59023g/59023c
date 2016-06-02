@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import * as applicationActions from '../actions/application'
 import MenuListItem from './MenuListItem'
@@ -27,7 +26,6 @@ class Menu extends React.Component {
     return (
       <div id="menu" ref="menu" className={this.props.activeClass}>
         <div>
-          <Link to="/">Home</Link>
           <ul>
             {menuItems.map((item, i) => <MenuListItem {...item} key={i} />)}
           </ul>
