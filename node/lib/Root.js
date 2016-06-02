@@ -1,5 +1,6 @@
 /* global __DEVTOOLS__ */
 
+
 import React, { PropTypes } from 'react'
 import { Redirect, Route } from 'react-router'
 import { ReduxRouter } from 'redux-router'
@@ -12,14 +13,13 @@ import * as constants from './constants'
 import * as i18n from './i18n'
 
 const {
-  About,
-  // Account,
   MetaHome,
   Application,
   GithubStargazers,
   GithubRepo,
   GithubUser,
   Home,
+  Post,
   Login,
   SuperSecretArea
 } = components
@@ -57,11 +57,11 @@ function renderRoutes () {
     <ReduxRouter>
       <Route component={Application}>
         <Route path="/" component={Home} />
+        <Route path=":username/:date/:postTitle" component={Post} />
         <Route path="stargazers" component={GithubStargazers}>
           <Route path=':username/:repo' component={GithubRepo} />
           <Route path=':username' component={GithubUser} />
         </Route>
-        // <Route path="about" component={About} />
         <Route path="meta" component={MetaHome} onEnter={requireAuth}>
           <Route path="secret-area" component={SuperSecretArea} />
         </Route>
