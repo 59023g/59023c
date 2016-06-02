@@ -1,17 +1,48 @@
 import * as constants from '../constants'
+import handleActionError from '../utils/handle-action-error'
 
-export function login (form, redirect) {
-  return dispatch => {
-    // simulate request
-    setTimeout(() => {
-      const token = Math.random().toString(36).substring(7)
-      dispatch({
-        type: constants.LOGGED_IN,
-        payload: { token }
+
+const USER_API = '../../mock_api/user.json'
+const token = Math.random().toString(36).substring(7)
+
+
+export function login (form) {
+
+  return function (dispatch) {
+    dispatch(requestLogin(form))
+
+    return fetch(USER_API)
+      .then(response => {
+        if (!response.ok) {
+          throw {
+            response
+          }
+        }
+        return response.json()
       })
-      // Can be used to navigate to a new route
-      if (redirect) redirect()
-    }, 300)
+      .then(json =>
+        dispatch(receiveLogin(json))
+      )
+      .catch((error) => {
+        handleActionError(dispatch, error, constants.REQUEST_LOGIN)
+      })
+  }
+}
+
+
+function requestLogin (form) {
+  return {
+    type: constants.REQUEST_LOGIN,
+    form
+  }
+}
+
+function receiveLogin (json) {
+  return {
+    type: constants.LOGGED_IN,
+    user: json.data,
+    token: token,
+    receivedAt: Date.now()
   }
 }
 
