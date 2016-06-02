@@ -9,6 +9,7 @@ import ShortPost from '../ShortPost'
 let posts = [{
   id: 1,
   user: 'Michael',
+  username: 'mpierce',
   url: Date.now() + '/the-first-blog-post',
   title: 'The first blog <h1>Post</h1>',
   content: 'Very excellent <h1>Post</h1> Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through',
@@ -18,6 +19,7 @@ let posts = [{
 }, {
   id: 2,
   user: 'James',
+  username: 'jamesm',
   url: Date.now() + '/the-second-blog-post',
   title: 'The Second blog Post',
   content: 'Very excellent <h1>Post</h1> Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going ',
@@ -27,6 +29,7 @@ let posts = [{
 }, {
   id: 3,
   user: 'Colin',
+  username: 'colinp',
   url: Date.now() + '/the-third-blog',
   title: 'The third blog ',
   content: 'PostHampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage',
@@ -91,6 +94,7 @@ export default class Home extends React.Component {
                <ShortPost
                  key={index}
                  user={post.user}
+                 username={post.username}
                  title={post.title}
                  content={post.content}
                  abstract={post.abstract}
