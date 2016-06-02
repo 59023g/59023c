@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as applicationActions from '../actions/application'
 
-var divStyle = {
+let divStyle = {
   backgroundColor: 'aliceblue',
   padding: '16px'
 }
@@ -15,21 +15,21 @@ class DisplayError extends React.Component {
   };
 
   render () {
-    const { props: { hideError, error } } = this
 
-    if (!error) return null
+    if (!this.props.error) return null
 
+    console.log(this.props.error)
     return (
       <div className="error-message" style={divStyle}>
         <div>
           <p>Hello Dave, You have reached an Error</p>
           <button
-            onClick={hideError}
+            onClick={this.props.hideError}
             type="button">
             <i />
           </button>
           <pre>
-            <code>{JSON.stringify(error, null, 2)}</code>
+            <code>{JSON.stringify(this.props.error, null, 2)}</code>
           </pre>
         </div>
       </div>
