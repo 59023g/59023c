@@ -1,46 +1,44 @@
-import express from 'express'
-import path from 'path'
-import compression from 'compression'
+var express = require('express')
+var path = require('path')
+var compression = require('compression')
 
-import redis from 'redis'
+var redis = require('redis')
 
-import React from 'react'
+var React = require('react')
 
-import { renderToString } from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
+// var { renderToString } = require('react-dom/server')
+// var { match, RouterContext } = require('react-router')
 
-//import routes from './components/routes'
-import index from './server_index.js'
+//var routes = require('./components/routes'
+var index = require('./server_index.js')
 
 var app = express()
+
+var isProduction = process.env.NODE_ENV === 'production';
+var port = isProduction ? process.env.PORT : 3000;
+var publicPath = path.resolve(__dirname, 'public');
+
 app.use(compression())
 
-app.use(express.static('public'))
+app.use(express.static(publicPath))
 
 
 // console.log(process.env.REDIS_PORT_6379_TCP_ADDR + ':' + process.env.REDIS_PORT_6379_TCP_PORT);
 //
 // var client = redis.createClient('6379', 'redis');
 
-app.get('*', (req, res) => {
-  console.log(req.url)
-  res.send(index)
-//  res.sendFile(path.join(__dirname, './dist/index.html'));
-  // match({ routes, location: req.url }, (err, redirect, props) => {
-  //   if (err) {
-  //     res.status(500).send(err.message)
-  //   } else if (redirect) {
-  //     res.redirect(redirect.pathname + redirect.search)
-  //   } else if (props) {
-  //     const appHtml = renderToString(<RouterContext {...props}/>)
-  //     res.send(index)
-  //   } else {
-  //     res.status(404).send('Not Found')
-  //   }
-  // })
-})
+// app.get('*', (req, res) => {
+//   console.log(req.url)
+//   res.send(index)
+// })
+//
+// app.get('/mock_api/user.json', (req, res) => {
+//   console.log(req.url)
+//   res.send('hello')
+// })
 
 
-app.listen(process.env.PORT || 9090, function () {
-    console.log(process.env + ' Listening on port ' + (process.env.PORT || 9090));
-  });
+app.listen(port, function() {
+    console.log(' Listening on port: ' +  port );
+  }
+);
