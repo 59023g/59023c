@@ -22,7 +22,7 @@ class DisplayError extends React.Component {
     return (
       <div className="error-message" style={divStyle}>
         <div>
-          <p>Hello Dave, You have reached an Error</p>
+          <p>You have reached an Error</p>
           <button
             onClick={this.props.hideError}
             type="button">
