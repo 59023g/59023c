@@ -2,9 +2,7 @@ import * as constants from '../constants'
 import handleActionError from '../utils/handle-action-error'
 
 
-const USER_API = '../../mock_api/user.json'
-const token = Math.random().toString(36).substring(7)
-
+const USER_API = '/user.json'
 
 export function login (form) {
 
@@ -40,9 +38,7 @@ function requestLogin (form) {
 function receiveLogin (json) {
   return {
     type: constants.LOGGED_IN,
-    user: json.data,
-    token: token,
-    receivedAt: Date.now()
+    payload: json
   }
 }
 
