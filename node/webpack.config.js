@@ -7,11 +7,11 @@ var mainPath = path.resolve(__dirname, 'lib', 'index.js');
 
 module.exports = {
   devtool: 'eval',
-  entry: {
+  entry: [
     'webpack/hot/dev-server',
     'webpack-dev-server/client?http://localhost:8080',
     mainPath
-  },
+  ],
   output: {
     path: buildPath,
     filename: 'bundle.js',
@@ -23,6 +23,7 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin()
   ] : [
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('development')
@@ -32,13 +33,20 @@ module.exports = {
   ],
 
   module: {
-    loaders: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      query: {
-        presets: ['es2015', 'react', 'stage-0']
+    loaders: [
+
+      {
+        test: /\.js$/,
+        exclude: nodeModulesPath,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'react', 'stage-0']
+        }
+      },
+      {
+        test: /\.css$/,
+        loader: 'style!css'
       }
-    }]
+    ]
   }
 }
