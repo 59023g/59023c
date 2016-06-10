@@ -1,16 +1,25 @@
-import * as constants from '../constants'
+// actions/application
+
+import {
+  REQUEST_LOGIN,
+  RECEIVE_LOGIN,
+  // LOGGED_IN,
+  // LOG_OUT,
+  // SHOW_ERROR,
+  HIDE_ERROR,
+  LOCALE_SWITCHED
+} from '../constants'
+
 import handleActionError from '../utils/handle-action-error'
 
 
 const USER_API = '/user.json'
 
-export function login (form) {
-
+export function login(form) {
   return function (dispatch) {
     dispatch(requestLogin(form))
-
     return fetch(USER_API)
-      .then(response => {
+    .then(response => {
         if (!response.ok) {
           throw {
             response
@@ -18,34 +27,39 @@ export function login (form) {
         }
         return response.json()
       })
-      .then(json =>
+      .then(json => {
         dispatch(receiveLogin(json))
-      )
+      })
       .catch((error) => {
-        handleActionError(dispatch, error, constants.REQUEST_LOGIN)
+        handleActionError(dispatch, error, REQUEST_LOGIN)
       })
   }
 }
 
 
-function requestLogin (form) {
+export function requestLogin(form) {
   return {
-    type: constants.REQUEST_LOGIN,
+    type: REQUEST_LOGIN,
     form
   }
 }
 
-function receiveLogin (json) {
+export function receiveLogin(payload) {
   return {
-    type: constants.LOGGED_IN,
-    payload: json
+    type: RECEIVE_LOGIN,
+    payload
   }
 }
 
-export function switchLocale (locale) {
-  return { type: constants.LOCALE_SWITCHED, payload: locale }
+export function switchLocale(locale) {
+  return {
+    type: LOCALE_SWITCHED,
+    locale
+  }
 }
 
-export function hideError () {
-  return { type: constants.HIDE_ERROR }
+export function hideError() {
+  return {
+    type: HIDE_ERROR
+  }
 }
