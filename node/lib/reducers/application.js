@@ -1,55 +1,58 @@
-import * as constants from '../constants'
-import createReducer from '../utils/create-reducer'
+// reducers/application.js
+
+import {
+  REQUEST_LOGIN,
+  RECEIVE_LOGIN,
+  LOG_OUT,
+  SHOW_ERROR,
+  HIDE_ERROR
+  // LOCALE_SWITCHED
+} from '../constants'
 
 const initialState = {
-  token: null,
-  locale: 'en',
+  isFetching: false,
   id: null,
-  username: null,
-  user: {
-    // TODO: have a checkbox to update the state
-    // e.g.: on the login page and/or menu
-    // permissions: ['manage_account']
-    permissions: []
-  },
+  userName: null,
+  token: null,
+  displayName: null,
+  locale: 'en',
+  permissions: [],
   error: null
 }
 
-const actionHandlers = {
-  [constants.LOGGED_IN]: (state, action) => {
-    const { payload, source } = action
+export default function (state, action) {
+  if (typeof state === 'undefined')
+    return initialState
+  switch (action.type) {
+  case REQUEST_LOGIN:
     return Object.assign({}, state, {
-      token: payload.token,
-      username: payload.user,
-      user: {
-        permission: ["all"]
-      }
+      ...state,
+      isFetching: true
     })
-
-  },
-  [constants.LOG_OUT]: () => ({ token: null }),
-  [constants.LOCALE_SWITCHED]: (_, action) => ({ locale: action.payload }),
-
-  // TODO: this handle only API error responses.
-  // We should also handle all other kind of application errors,
-  // report them and show some kind of helpful message to the user.
-  [constants.SHOW_ERROR]: (state, action) => {
-    console.log('show error', action)
-    const { payload, source } = action
+  case RECEIVE_LOGIN:
     return Object.assign({}, state, {
-      // TODO: ideally we want to map API error response codes
-      // with some user-friendly messages.
+      isFetching: false,
+      ...action.payload
+    })
+  case LOG_OUT:
+    return initialState
+  case SHOW_ERROR:
+    return Object.assign({}, state, {
       error: {
-        source,
-        message: payload.message || payload.statusText,
-        url: payload.url || null,
-        statusCode: payload.statusCode || payload.code || payload.status,
-        body: payload.body || (payload instanceof Error ?
-          (payload.toString() + '\n' + payload.stack) : payload)
+        action,
+        message: action.message || action.statusText,
+        url: action.message || null,
+        statusCode: action.statusCode || action.code || action.status,
+        body: action.body || (action instanceof Error ?
+          (action.toString() + '\n' + action.stack) : action)
       }
     })
-  },
-  [constants.HIDE_ERROR]: state => ({ ...state, ...{ error: null } }),
+  case HIDE_ERROR:
+    return Object.assign({}, state, {
+      ...state,
+      error: null
+    })
+  default:
+    return state
+  }
 }
-
-export default createReducer(initialState, actionHandlers)
