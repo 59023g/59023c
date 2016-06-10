@@ -20,9 +20,10 @@ export const FETCH_POST_FAILURE = 'FETCH_POST_FAILURE'
 // export const FETCH_REPO_STARGAZERS = 'FETCH_REPO_STARGAZERS'
 
 export const REQUEST_LOGIN = 'REQUEST_LOGIN'
+export const RECEIVE_LOGIN = 'RECEIVE_LOGIN'
+
 export const FAILED_LOGIN = 'FAILED_LOGIN'
 
-export const LOGGED_IN = 'LOGGED_IN'
 export const LOG_OUT = 'LOG_OUT'
 
 // export const LOCALE_SWITCHED = 'LOCALE_SWITCHED'
