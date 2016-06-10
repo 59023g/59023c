@@ -1,5 +1,5 @@
 import * as constants from '../constants'
-import * as storage from './storage'
+import * as localStorage from './storage'
 
 export default function persistenceHandler (next) {
   return (reducer, initialState) => {
@@ -9,13 +9,13 @@ export default function persistenceHandler (next) {
       dispatch (action) {
         store.dispatch(action)
 
-        storage.put('locale', store.getState().application.locale)
+        localStorage.put('locale', store.getState().application.locale)
 
-        if (action.type === constants.LOGGED_IN)
-          storage.put('token', action.payload.token)
+        if (action.type === constants.RECEIVE_LOGIN)
+          localStorage.put('token', action.payload.token)
 
         if (action.type === constants.LOG_OUT)
-          storage.remove('token')
+          localStorage.remove('token')
 
         return action
       }
