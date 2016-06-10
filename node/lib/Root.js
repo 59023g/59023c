@@ -7,7 +7,7 @@ import { ReduxRouter } from 'redux-router'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import configureStore from './utils/configure-store'
-import * as storage from './persistence/storage'
+import * as localStorage from './persistence/storage'
 import * as components from './components'
 import * as constants from './constants'
 import * as i18n from './i18n'
@@ -26,8 +26,8 @@ const {
 
 const initialState = {
   application: {
-    token: storage.get('token'),
-    locale: storage.get('locale') || 'en',
+    token: localStorage.get('token'),
+    locale: 'en',
     user: { permissions: [/*'manage_account'*/] }
   }
 }
