@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { defineMessages, FormattedMessage } from 'react-intl'
 
-import ShortPost from '../ShortPost'
+import ShortPost from '../components/ShortPost'
 
 let posts = [{
   id: 1,
