@@ -4,7 +4,8 @@ import * as actions from '../../actions/application'
 export default class Login extends React.Component {
 
   static propTypes = {
-    location: PropTypes.object
+    location: PropTypes.object,
+    params: PropTypes.any
   };
 
   static contextTypes = {
@@ -17,7 +18,13 @@ export default class Login extends React.Component {
     this.state = { email: null, password: null }
   }
 
+  componentDidMount () {
+    console.log('params', this.props.params)
+
+  }
+
   handleInputChange (evt) {
+
     this.setState({
       [evt.target.name]: evt.target.value
     })
@@ -29,11 +36,14 @@ export default class Login extends React.Component {
     const { location } = this.props
 
     let nextPath = '/meta'
+
     if (location.state && location.state.nextPathname)
       nextPath = location.state.nextPathname
 
     store.dispatch(actions.login(this.state, () => {
       // redirect to a secure page
+
+      // let nextPath =
       history.pushState({}, nextPath)
     }))
   }
