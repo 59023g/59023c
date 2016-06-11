@@ -7,7 +7,7 @@ export { default as Post } from '../containers/Post'
 export { default as Forbidden } from '../containers/Forbidden'
 export { default as GithubStargazers } from '../containers/GithubStargazers'
 export { default as Login } from '../containers/Login'
-export { default as Home } from '../containers/Home'
+export { default as HomePage } from '../containers/HomePage'
 export { default as SuperSecretArea } from '../containers/SuperSecretArea'
 
 export { default as GithubRepo } from './github/Repo'

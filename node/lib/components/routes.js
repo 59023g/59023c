@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
 import App from './App'
-import Home from './Home'
+import HomePage from './HomePage'
 import About from './About'
 
 import Meta from './Meta'
@@ -12,7 +12,7 @@ import NotFound from './404'
 
 module.exports = (
   <Route path="/" component={App}>
-    <IndexRoute component={Home} />
+    <IndexRoute component={HomePage} />
     <Route path="/:userName/meta" component={Meta} />
     <Route path="/:userName/posts" component={Posts}>
       <Route path="/:userName/posts/:post" component={PostForm} />

@@ -18,7 +18,7 @@ const {
   GithubStargazers,
   GithubRepo,
   GithubUser,
-  Home,
+  HomePage,
   Post,
   Login,
   SuperSecretArea
@@ -56,7 +56,7 @@ function renderRoutes () {
   return (
     <ReduxRouter>
       <Route component={Application}>
-        <Route path="/" component={Home} />
+        <Route path="/" component={HomePage} />
         <Route path=":username/:date/:postTitle" component={Post} />
         <Route path="stargazers" component={GithubStargazers}>
           <Route path=':username/:repo' component={GithubRepo} />
