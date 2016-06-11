@@ -10,7 +10,7 @@ import {
   LOCALE_SWITCHED
 } from '../constants'
 
-import handleActionError from '../utils/handle-action-error'
+import handleActionError from '../utils/handleActionError'
 
 
 const USER_API = '/user.json'

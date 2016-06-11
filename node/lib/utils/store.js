@@ -1,5 +1,5 @@
 import * as constants from '../constants'
-import * as localStorage from './storage'
+import * as localStorage from './localStorage'
 
 export default function persistenceHandler (next) {
   return (reducer, initialState) => {
