@@ -19,8 +19,7 @@ export default class Login extends React.Component {
   }
 
   componentDidMount () {
-    console.log('params', this.props.params)
-
+    // console.log('params', this.props.params)
   }
 
   handleInputChange (evt) {
@@ -41,9 +40,6 @@ export default class Login extends React.Component {
       nextPath = location.state.nextPathname
 
     store.dispatch(actions.login(this.state, () => {
-      // redirect to a secure page
-
-      // let nextPath =
       history.pushState({}, nextPath)
     }))
   }
