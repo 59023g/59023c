@@ -1,42 +1,14 @@
 /*eslint-disable max-len*/
-import React from 'react'
-import { connect } from 'react-redux'
 
+// pages/HomePage
+
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { defineMessages, FormattedMessage } from 'react-intl'
 
 import ShortPost from '../components/ShortPost'
+import { fetchPosts } from '../actions/posts'
 
-let posts = [{
-  id: 1,
-  user: 'Michael',
-  username: 'mpierce',
-  url: Date.now() + '/the-first-blog-post',
-  title: 'The first blog <h1>Post</h1>',
-  content: 'Very excellent <h1>Post</h1> Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through',
-  abstract: 'Who needs Abstract?',
-  tags: ['trade', 'free', 'awesome'],
-  updatedAt: Date.now()
-}, {
-  id: 2,
-  user: 'James',
-  username: 'jamesm',
-  url: Date.now() + '/the-second-blog-post',
-  title: 'The Second blog Post',
-  content: 'Very excellent <h1>Post</h1> Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going ',
-  abstract: 'Who needs Abstract?',
-  tags: ['trade', 'free', 'awesome'],
-  updatedAt: Date.now()
-}, {
-  id: 3,
-  user: 'Colin',
-  username: 'colinp',
-  url: Date.now() + '/the-third-blog',
-  title: 'The third blog ',
-  content: 'PostHampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage',
-  abstract: 'Who needs Abstract?',
-  tags: ['trade', 'free', 'awesome'],
-  updatedAt: Date.now()
-}]
 
 const messages = defineMessages({
   welcome: {
@@ -49,33 +21,35 @@ const messages = defineMessages({
     description: 'Introductive message about the website',
     defaultMessage: 'This website is a boilerplate example to showcase and ' +
       'provide best practices around '
-  },
-  intro2: {
-    id: 'home.intro2',
-    description: 'Recommendation and scope of the website',
-    defaultMessage: 'I recommend looking into the source code for inspiration ' +
-      'and ideas on how to implement many different use cases.' +
-      '{br}' +
-      'I also plan to continuously add and demo case different ' +
-      'kind of features that are commons in web applications.'
-  },
-  intro3: {
-    id: 'home.intro3',
-    description: 'Mention contributions',
-    defaultMessage: 'Stay tuned and enjoy! For any question feel free to ' +
-      '{linkIssues}, I\'ll be happy to provide some help whenever possible. ' +
-      'And any pull-request is very much welcomed! ;)'
-  },
-  dropIssue: {
-    id: 'home.intro3.dropAnIssue',
-    defaultMessage: 'drop an issue'
   }
 })
 
+function loadData (props) {
+  props.fetchPosts()
+}
+
 
 export default class HomePage extends React.Component {
+  static propTypes = {
+    fetchPosts: PropTypes.func.isRequired,
+    posts: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    store: PropTypes.any,
+    history: PropTypes.object.isRequired
+  }
+
+  constructor (props) {
+    super(props)
+  }
+
+  componentWillMount (props, moreProps) {
+    loadData(this.props)
+  }
 
   render () {
+    let posts = this.props.posts.posts
 
     return (
       <div>
@@ -110,5 +84,6 @@ export default class HomePage extends React.Component {
 }
 
 export default connect(
-  ({ application }) => ({ application })
+  ({ posts }) => ({ posts }),
+  { fetchPosts }
 )(HomePage)
