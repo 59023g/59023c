@@ -44,7 +44,7 @@ export default class Application extends React.Component {
   render () {
 
     const isFetching = () => {
-      if (Boolean(this.props.application.isFetching))
+      if (Boolean(this.props.application.isFetching) || Boolean(this.props.posts.isFetching))
         return (
           <div style={divStyle}>Loading</div>
         )
@@ -86,5 +86,5 @@ export default class Application extends React.Component {
 }
 
 export default connect(
-  ({ application }) => ({ application })
+  ({ application, posts }) => ({ application,posts })
 )(Application)
