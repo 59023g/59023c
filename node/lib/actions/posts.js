@@ -1,80 +1,38 @@
-import 'whatwg-fetch'
-import parseLinkHeader from 'parse-link-header'
-import handleActionError from '../utils/handle-action-error'
+// actions/posts
+
+import handleActionError from '../utils/handleActionError'
 import processResponse from '../utils/process-response'
+
 import {
-  FETCH_USER,
-  FETCH_REPO,
-  FETCH_USER_STARGAZERS,
-  FETCH_REPO_STARGAZERS
+  REQUEST_POSTS,
+  RECEIVE_POSTS,
 } from '../constants'
 
-const API = '../../mock_api/'
+const POSTS_API = '/posts.json'
 
-export function fetchUser (options) {
-  const { username } = options
 
-  return dispatch => {
-    fetch(`${API}/users/${username}`)
-    .then(processResponse)
-    .then(res => dispatch({
-      type: FETCH_USER,
-      user: res
-    }))
-    .catch(error => handleActionError(dispatch, error, FETCH_USER))
+function requestPosts () {
+  return {
+    type:  REQUEST_POSTS
   }
 }
 
-export function fetchUserStargazers (options) {
-  const { page, username } = options
-  const url = page ? page :
-    `${API}/users/${username}/starred`
-
-  return dispatch => {
-    fetch(url)
-    .then(res => {
-      const pagination = parseLinkHeader(res.headers.get('link'))
-      return processResponse(res)
-      .then(result => dispatch({
-        type: FETCH_USER_STARGAZERS,
-        stargazers: result,
-        pagination
-      }))
-    })
-    .catch(error => handleActionError(dispatch, error, FETCH_USER_STARGAZERS))
+function receivePosts (payload) {
+  return {
+    type:  RECEIVE_POSTS,
+    receivedAt: Date.now(),
+    payload
   }
 }
 
-export function fetchRepo (options) {
-  const { username, repo } = options
-
-  return dispatch => {
-    fetch(`${API}/repos/${username}/${repo}`)
-    .then(processResponse)
-    .then(res => dispatch({
-      type: FETCH_REPO,
-      repo: res
-    }))
-    .catch(error => handleActionError(dispatch, error, FETCH_REPO))
-  }
-}
-
-export function fetchRepoStargazers (options) {
-  const { page, username, repo } = options
-  const url = page ? page :
-    `${API}/repos/${username}/${repo}/stargazers`
-
-  return dispatch => {
-    fetch(url)
-    .then(res => {
-      const pagination = parseLinkHeader(res.headers.get('link'))
-      return processResponse(res)
-      .then(result => dispatch({
-        type: FETCH_REPO_STARGAZERS,
-        stargazers: result,
-        pagination
-      }))
-    })
-    .catch(error => handleActionError(dispatch, error, FETCH_REPO_STARGAZERS))
+export function fetchPosts () {
+  return function (dispatch) {
+    dispatch(requestPosts())
+    return fetch(POSTS_API)
+      .then(processResponse)
+      .then(res => {
+        dispatch(receivePosts(res))
+      })
+      .catch(error => handleActionError(dispatch, error, REQUEST_POSTS))
   }
 }
