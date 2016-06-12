@@ -2,9 +2,22 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
+import DevTools from './DevTools'
+
+
 import Menu from './Menu'
 import Footer from './Footer'
 import DisplayError from './DisplayError'
+
+let divStyle = {
+  backgroundColor: 'aliceblue',
+  width: '100%',
+  height: '100%',
+  padding: '16px',
+  position: 'absolute',
+  top: '0',
+  left: '0'
+}
 
 export default class Application extends React.Component {
 
@@ -30,6 +43,12 @@ export default class Application extends React.Component {
 
   render () {
 
+    const isFetching = () => {
+      if(Boolean(this.props.application.isFetching))
+        return (
+          <div style={divStyle}>Loading</div>
+        )
+    }
     const loggedIn = Boolean(this.props.application.token)
 
     const { isMenuActive } = this.state
@@ -47,16 +66,18 @@ export default class Application extends React.Component {
 
     return (
       <div id="layout" className={activeClass}>
-      <Link to="/">Home</Link>
+      <Link to="/">Home </Link>
+      <Link to="/meta"> Meta</Link>
 
         {showMenu()}
-
+        {isFetching()}
         <div id="main">
           <DisplayError />
           {this.props.children}
         </div>
 
         <Footer />
+        <DevTools />
       </div>
     )
   }

@@ -28,7 +28,9 @@ export function login (form, redirect) {
       return response.json()
     })
       .then(json => {
-        dispatch(receiveLogin(json))
+        setTimeout(() => {
+          dispatch(receiveLogin(json))
+        }, 2000)
       })
       .then( () => {
         if (redirect) redirect()
