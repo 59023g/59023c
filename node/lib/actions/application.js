@@ -3,30 +3,23 @@
 import {
   REQUEST_LOGIN,
   RECEIVE_LOGIN,
-  // LOGGED_IN,
-  // LOG_OUT,
-  // SHOW_ERROR,
   HIDE_ERROR,
   LOCALE_SWITCHED
 } from '../constants'
 
 import handleActionError from '../utils/handleActionError'
+import processResponse from '../utils/process-response'
+
 
 
 const USER_API = '/user.json'
 
 export function login (form, redirect) {
+
   return function (dispatch) {
     dispatch(requestLogin(form))
     return fetch(USER_API)
-    .then(response => {
-      if (!response.ok) {
-        throw {
-          response
-        }
-      }
-      return response.json()
-    })
+      .then(processResponse)
       .then(json => {
         setTimeout(() => {
           dispatch(receiveLogin(json))
