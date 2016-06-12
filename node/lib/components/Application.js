@@ -44,10 +44,12 @@ export default class Application extends React.Component {
   render () {
 
     const isFetching = () => {
-      if(Boolean(this.props.application.isFetching))
+      if (Boolean(this.props.application.isFetching))
         return (
           <div style={divStyle}>Loading</div>
         )
+      else
+        return undefined
     }
     const loggedIn = Boolean(this.props.application.token)
 
