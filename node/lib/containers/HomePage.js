@@ -1,6 +1,6 @@
 /*eslint-disable max-len*/
 
-// pages/HomePage
+// containers/HomePage
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
@@ -44,7 +44,7 @@ export default class HomePage extends React.Component {
     super(props)
   }
 
-  componentWillMount (props, moreProps) {
+  componentWillMount () {
     loadData(this.props)
   }
 

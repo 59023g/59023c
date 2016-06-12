@@ -1,10 +1,6 @@
 import {
   REQUEST_POSTS,
-  RECEIVE_POSTS,
-  // FETCH_USER,
-  // FETCH_REPO,
-  // FETCH_USER_STARGAZERS,
-  // FETCH_REPO_STARGAZERS
+  RECEIVE_POSTS
 } from '../constants'
 
 const initialState = {

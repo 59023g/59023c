@@ -6,7 +6,6 @@ import {
   LOG_OUT,
   SHOW_ERROR,
   HIDE_ERROR
-  // LOCALE_SWITCHED
 } from '../constants'
 
 const initialState = {

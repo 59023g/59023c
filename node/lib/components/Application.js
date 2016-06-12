@@ -23,7 +23,8 @@ export default class Application extends React.Component {
 
   static propTypes = {
     children: PropTypes.any,
-    application: PropTypes.object.isRequired
+    application: PropTypes.object.isRequired,
+    posts: PropTypes.object.isRequired
   };
 
   constructor (props, context) {
@@ -44,7 +45,10 @@ export default class Application extends React.Component {
   render () {
 
     const isFetching = () => {
-      if (Boolean(this.props.application.isFetching) || Boolean(this.props.posts.isFetching))
+      if (
+        Boolean(this.props.application.isFetching)
+        || Boolean(this.props.posts.isFetching)
+      )
         return (
           <div style={divStyle}>Loading</div>
         )
