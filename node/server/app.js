@@ -5,12 +5,11 @@ var compression = require('compression')
 var redis = require('redis')
 
 var React = require('react')
-
 // var { renderToString } = require('react-dom/server')
 // var { match, RouterContext } = require('react-router')
 
 //var routes = require('./components/routes'
-var index = require('./server_index.js')
+var index = require('../server_index.js')
 
 var app = express()
 
@@ -22,6 +21,15 @@ app.use(compression())
 
 app.use(express.static(publicPath))
 
+app.get('/api/posts', function (req, res) {
+  console.log(req.query)
+  console.log(req.params)
+  //send(res, api.queryPosts(query))
+})
+
+app.get('/', (req, res) => {
+  res.send(index)
+})
 
 // console.log(process.env.REDIS_PORT_6379_TCP_ADDR + ':' + process.env.REDIS_PORT_6379_TCP_PORT);
 //
