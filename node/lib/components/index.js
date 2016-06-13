@@ -2,7 +2,7 @@ export { default as Application } from './Application'
 
 export { default as Account } from '../containers/Account'
 export { default as MetaHome } from '../containers/MetaHome'
-export { default as Post } from '../containers/Post'
+export { default as PostPage } from '../containers/PostPage'
 
 export { default as Forbidden } from '../containers/Forbidden'
 export { default as GithubStargazers } from '../containers/GithubStargazers'
