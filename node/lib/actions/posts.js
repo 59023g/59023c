@@ -8,7 +8,7 @@ import {
   RECEIVE_POSTS,
 } from '../constants'
 
-const POSTS_API = '/posts.json'
+const POSTS_API = '/api/posts'
 
 
 function requestPosts () {
@@ -25,13 +25,17 @@ function receivePosts (payload) {
   }
 }
 
+// todo - check cache first or diff - this call not always necc.
 export function fetchPosts () {
   return function (dispatch) {
     dispatch(requestPosts())
     return fetch(POSTS_API)
       .then(processResponse)
       .then(res => {
-        dispatch(receivePosts(res))
+        setTimeout( () => {
+          dispatch(receivePosts(res))
+        }, 2000)
+
       })
       .catch(error => handleActionError(dispatch, error, REQUEST_POSTS))
   }
