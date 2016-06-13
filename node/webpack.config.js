@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack')
 
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var buildPath = path.resolve(__dirname, 'public', 'build');
+var buildPath = path.resolve(__dirname, 'build');
 var mainPath = path.resolve(__dirname, 'lib', 'index.js');
 
 module.exports = {
@@ -14,8 +14,8 @@ module.exports = {
   ],
   output: {
     path: buildPath,
-    filename: 'bundle.js',
-    publicPath: '/build/'
+    filename: 'client.js',
+    publicPath: 'build/'
   },
 
   plugins: process.env.NODE_ENV === 'production' ? [
@@ -34,7 +34,6 @@ module.exports = {
 
   module: {
     loaders: [
-
       {
         test: /\.js$/,
         exclude: nodeModulesPath,
