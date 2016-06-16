@@ -7,6 +7,6 @@ npm-debug.log
 
 .DS_Store
 node/misc
-node/public
 node/build
 node/static
+node/mock_api
