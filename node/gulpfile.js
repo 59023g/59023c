@@ -79,12 +79,12 @@ function onBuild(err, stats) {
 
 var frontendConfig = config({
   entry: [
-    './lib/index.js'
+    './client/index.js'
   ],
   output: {
     path: path.resolve('static/build'),
     publicPath: PROD ? '/build/' : 'http://localhost:3000/static/build/',
-    filename: 'frontend.js'
+    filename: 'client.js'
   },
   module: {
     loaders: [
@@ -120,7 +120,7 @@ if(!PROD) {
   ].concat(frontendConfig.entry);
 
   frontendConfig.plugins = frontendConfig.plugins.concat([
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin({quiet: true}),
     new webpack.NoErrorsPlugin()
   ]);
 }
@@ -155,10 +155,10 @@ fs.readdirSync('node_modules')
     node_modules[mod] = 'commonjs ' + mod;
   });
 
-node_modules['react/addons'] = 'commonjs react/addons';
+node_modules['react/addons', 'react-dom/server'] = 'commonjs react/addons';
 
 var backendConfig = config({
-    entry: path.resolve(__dirname, './server/main.js'),
+    entry: ['./server/main.js'],
     output: {
       path: path.join(__dirname, 'build'),
       filename: 'server.js'
@@ -180,7 +180,10 @@ var backendConfig = config({
       loaders: [{
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader?presets[]=es2015&presets[]=react'
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'react', 'stage-0']
+        }
       }]
     },
     plugins: [
