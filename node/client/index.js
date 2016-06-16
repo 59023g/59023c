@@ -4,7 +4,6 @@ import { Provider } from 'react-redux'
 
 import Root, { store } from './Root'
 
-
 start()
 
 function start () {

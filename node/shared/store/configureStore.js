@@ -1,37 +1,33 @@
 /* global __DEVTOOLS__ */
 
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
-import { reduxReactRouter, routerStateReducer } from 'redux-router'
-import createBrowserHistory from 'history/lib/createBrowserHistory'
-import createHashHistory from 'history/lib/createHashHistory'
+// import { reduxReactRouter, routerStateReducer } from 'redux-router'
+// import createBrowserHistory from 'history/lib/createBrowserHistory'
+// import createHashHistory from 'history/lib/createHashHistory'
 import thunk from 'redux-thunk'
 import logger from '../middleware/logger'
-import persistenceStore from '../utils/store'
+
+// todo - client only
+// import persistenceStore from '../utils/store'
+
 import * as reducers from '../reducers'
+import { routerReducer } from 'react-router-redux'
 
-// Use hash location for Github Pages
-// but switch to HTML5 history locally.
-const createHistory = process.env.NODE_ENV === 'production' ?
-  createHashHistory : createBrowserHistory
-
-const storeEnhancers = [
-  persistenceStore,
-  reduxReactRouter({ createHistory })
-]
-
-if (__DEVTOOLS__) {
+if (typeof __DEVTOOLS__ !== 'undefined' && __DEVTOOLS__) {
   const DevTools = require('../components/DevTools').default
   storeEnhancers.push(DevTools.instrument())
 }
 
 const finalCreateStore = compose(
   applyMiddleware(thunk, logger),
-  ...storeEnhancers
 )(createStore)
 
-const combinedReducer = combineReducers(Object.assign({
-  router: routerStateReducer
-}, reducers))
+const combinedReducer = combineReducers(
+  {
+  ...reducers,
+  routing: routerReducer
+  }
+)
 
 export default function configureStore (initialState) {
 

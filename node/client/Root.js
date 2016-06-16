@@ -2,15 +2,20 @@
 
 
 import React, { PropTypes } from 'react'
-import { Redirect, Route } from 'react-router'
-import { ReduxRouter } from 'redux-router'
+import { Redirect, Route, browserHistory } from 'react-router'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
-import configureStore from './store/configureStore'
-import * as localStorage from './utils/localStorage'
-import * as components from './components'
-import * as constants from './constants'
-import * as i18n from './i18n'
+import { createHistory } from 'history'
+
+// todo - client only
+// import * as localStorage from './utils/localStorage'
+
+// todo - refactor so accurate
+import configureStore from '../shared/store/configureStore'
+import * as components from '../shared/components'
+import * as constants from '../shared/constants'
+import * as i18n from '../shared/i18n'
 
 const {
   MetaHome,
@@ -24,15 +29,22 @@ const {
   SuperSecretArea
 } = components
 
-const initialState = {
-  application: {
-    token: localStorage.get('token'),
-    locale: 'en',
-    user: { permissions: [/*'manage_account'*/] }
-  }
-}
+// const preloadedState = window.__PRELOADED_STATE__
 
-export const store = configureStore(initialState)
+// const initialState = {
+//   application: {
+//     token: null,
+//     locale: 'en',
+//     user: { permissions: [/*'manage_account'*/] }
+//   }
+// }
+
+var window = {}
+var initialState = window.__INITIAL_STATE__;
+
+var store = configureStore(initialState)
+
+// export const store = configureStore(preloadedState)
 
 function getRootChildren (props) {
   const intlData = {
@@ -46,15 +58,19 @@ function getRootChildren (props) {
   ]
 
   if (__DEVTOOLS__) {
-    const DevTools = require('./components/DevTools').default
+    const DevTools = require('../shared/components/DevTools').default
     rootChildren.push(<DevTools key="devtools" />)
   }
   return rootChildren
 }
 
+
+const history = createHistory()
+syncHistoryWithStore(history, store)
+
 function renderRoutes () {
   return (
-    <ReduxRouter>
+    <Router history={history}>
       <Route component={Application}>
         <Route path="/" component={HomePage} />
         <Route path=":username/:date/:postTitle" component={Post} />
@@ -70,7 +86,7 @@ function renderRoutes () {
         <Route path="/meta/login" component={Login} />
         <Route path="logout" onEnter={logout} />
       </Route>
-    </ReduxRouter>
+    </Router>
   )
 }
 
