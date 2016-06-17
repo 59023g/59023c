@@ -78,32 +78,29 @@ function onBuild(err, stats) {
 // frontend
 
 var frontendConfig = config({
+  devtool: 'eval',
   entry: [
     './client/index.js'
   ],
   output: {
-    path: path.resolve('static/build'),
-    publicPath: PROD ? '/build/' : 'http://localhost:3000/static/build/',
+    path: path.resolve(__dirname, 'static/build/'),
+    publicPath: PROD ? '/build/' : '/build/',
     filename: 'client.js'
   },
   module: {
     loaders: [
-      {test: /\.js$/,
-       exclude: /node_modules/,
-       loader: 'babel-loader',
-       query: {
-         // todo - add 'react-hot' to dev load
-         presets: PROD ? babelLoader() : babelLoader()
+      {
+        test: /\.js$/,
+        exclude: path.resolve(__dirname, 'node_modules'),
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'react', 'stage-0']
         }
-       },
-      {test: /\.less$/,
-       loader: (PROD ?
-                ExtractTextPlugin.extract('style-loader', 'css!less') :
-                'style!css!less') },
-      {test: /\.css$/,
-       loader: (PROD ?
-                ExtractTextPlugin.extract('style-loader', 'css') :
-                'style!css') }
+      },
+      {
+        test: /\.css$/,
+        loader: 'style!css'
+      }
     ]
   },
   resolve: {
@@ -115,8 +112,8 @@ var frontendConfig = config({
 
 if(!PROD) {
   frontendConfig.entry = [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server'
+    'webpack/hot/dev-server',
+    'webpack-dev-server/client?http://localhost:3000'
   ].concat(frontendConfig.entry);
 
   frontendConfig.plugins = frontendConfig.plugins.concat([
@@ -279,13 +276,19 @@ gulp.task('frontend-watch', function(done) {
     new WebpackDevServer(webpack(frontendConfig), {
       publicPath: frontendConfig.output.publicPath,
       hot: true,
-      stats: outputOptions
+      stats: outputOptions,
+      historyApiFallback: true,
+      // inline: true,
+      headers: { "Access-Control-Allow-Origin": "*" },
+      proxy: {
+        '/sockjs-node/*': 'http://localhost:3000'
+      }
     }).listen(3000, 'localhost', function (err, result) {
       if(err) {
         console.log(err);
       }
       else {
-        console.log('webpack dev server listening at localhost:3000');
+        console.log('webpack dev server listening at localhost:3000 ');
       }
     });
   }
