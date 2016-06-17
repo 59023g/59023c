@@ -1,16 +1,40 @@
-import React from 'react'
+console.log('starter')
+import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import { Router, browserHistory, match, createRoutes } from 'react-router'
 
-import Root, { store } from './Root'
+import { IntlProvider } from 'react-intl'
+import DevTools from '../shared/components/DevTools'
 
-start()
 
-function start () {
+// import Root from './Root'
+import configureStore from '../shared/store/configureStore'
+import Routes from '../shared/routes'
+import Root from './Root'
+
+import { createHistory } from 'history'
+
+var initialState = window.__INITIAL_STATE__
+
+var store = configureStore(initialState)
+var routes = createRoutes(Routes())
+
+const history = syncHistoryWithStore(browserHistory, store)
+
+const intlData = {
+  locale: 'en',
+  messages: null
+}
+
+match({ routes, location}, () => {
   ReactDOM.render(
     <Provider store={store}>
-      <Root />
+      <IntlProvider key="intl" {...intlData}>
+        <Router routes={routes} history={history}/>
+      </IntlProvider>
     </Provider>,
     document.getElementById('app-container')
   )
-}
+})
