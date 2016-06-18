@@ -105,7 +105,7 @@ var frontendConfig = config({
   },
   resolve: {
     alias: {
-      'impl': path.join(__dirname, 'static/js/impl'),
+      'impl': path.join(__dirname, 'client/impl'),
     }
   }
 });
@@ -187,6 +187,11 @@ var backendConfig = config({
       new webpack.BannerPlugin('require("source-map-support").install();',
                                { raw: true, entryOnly: false })
     ],
+    resolve: {
+      alias: {
+        'impl': path.join(__dirname, 'server/impl')
+      },
+    },
     devtool: 'sourcemap'
 
   });
