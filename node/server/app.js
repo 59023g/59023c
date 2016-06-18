@@ -1,91 +1,95 @@
 import express from 'express'
 import path from 'path'
+import nconf from 'nconf'
 import compression from 'compression'
 
 import redis from 'redis'
 
 import React from 'react'
-import ReactDomServer from 'react-dom/server'
+import { Provider } from 'react-redux'
+import ReactDOMServer from 'react-dom/server'
+import { match, RouterContext, createRoutes } from 'react-router'
+import { IntlProvider } from 'react-intl'
 
+
+import Routes from '../shared/routes'
 import configureStore from '../shared/store/configureStore'
+import * as reducers from '../shared/reducers'
 
-// import { createStore } from 'redux'
-// import { Provider } from 'react-redux'
-import  index from '../lib/index'
-
-console.log(index)
-console.log(configureStore)
-// import { store } from '../lib/Root'
-
-// import HomePage from '../lib/containers/HomePage'
-
-// var { match, RouterContext } require('react-router')
-
-//var routes = require('./components/routes'
-// import index from './server_index.js'
-
-
-var isProduction = process.env.NODE_ENV === 'production';
+var isProduction = nconf.get('production');
 var port = isProduction ? process.env.PORT : 3000;
+
 var publicPath = path.join(__dirname, '../static');
 
 var app = express()
 app.use(express.static(publicPath));
 app.use(compression())
 
-var initialState = {
-    application: {
-      token: null,
-      locale: 'en',
-      user: { permissions: [] }
-    },
-    posts: null,
-    router: null
+
+const intlData = {
+  locale: 'en',
+  messages: null
 }
 
-var stateJSON = JSON.stringify(state).replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--');
-// return {
-//   initialState: "window.__INITIAL_STATE__ = "+stateJSON
-// }
+var initialState = {
+  application: {
+    token: null,
+    locale: 'en',
+    user: {
+      permissions: []
+    }
+  },
+  posts: null
+}
 
-/* Using this.props.initialState in the Index component */
-var Index = React.createClass({
-  render: function() {
-    return (
-      <html>
-        <head>
-          /* ... */
-          <script dangerouslySetInnerHTML={{__html: this.props.initialState}} />
-        </head>
-	/* ... */
-      </html>
-    )
-  }
-});
+var store = configureStore(initialState)
+var routes = createRoutes(Routes())
 
-
-
-var store = store.configureStore(reducers, initialState)
+const _initialState = store.getState()
 
 app.get('/api/posts', function (req, res) {
   console.log(req.query)
   console.log(req.params)
-  //send(res, api.queryPosts(query))
 })
 
-app.get('*', (req, res) => {
-  res.send("<!DOCTYPE html>"+
-  ReactDOMServer.renderToString(
-    Provider({store: store}, RouterContext(renderProps))
-  )
-);
-})
+app.use('*', function (req, res) {
+    match({routes, location:req.url}, (error, redirectLocation, renderProps) => {
+        if (error) {
+          res.status(500).send(error.message)
+        } else if (redirectLocation) {
+          res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+        } else if (renderProps) {
+            var pageData =
+            ReactDOMServer.renderToString(
+              <Provider store={store}>
+                <IntlProvider key='intl' {...intlData}>
+                  <RouterContext {...renderProps}/>
+                </IntlProvider>
+              </Provider>
+            )
 
-// console.log(process.env.REDIS_PORT_6379_TCP_ADDR + ':' + process.env.REDIS_PORT_6379_TCP_PORT);
-//
-// var client = redis.createClient('6379', 'redis');
+            res.status(200).send(createPage(pageData, _initialState));
+        } else {
+          res.status(404).send('Not found')
+        }
+    });
+});
 
-app.listen(port, function() {
-    console.log(' Listening on port: ' +  port );
-  }
-);
+function createPage (html, initialState) {
+  return `
+    <!doctype html>
+    <html>
+      <head>
+        <meta charset="utf-8"/>
+        <title>mep</title>
+      </head>
+      <body>
+        <script> window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>
+        <div id="app-container">${html}</div>
+        <script src="http://localhost:3000/build/client.js"></script>
+      </body>
+    </html>
+    `
+}
+
+module.exports = app
