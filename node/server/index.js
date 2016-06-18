@@ -1,3 +1,5 @@
+// server/index (entry point)
+
 import http from 'http'
 import nconf from 'nconf'
 
