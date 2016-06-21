@@ -155,7 +155,7 @@ fs.readdirSync('node_modules')
 node_modules['react/addons', 'react-dom/server'] = 'commonjs react/addons';
 
 var backendConfig = config({
-    entry: ['./server/main.js'],
+    entry: ['./server/index.js'],
     output: {
       path: path.join(__dirname, 'build'),
       filename: 'server.js'

@@ -27,16 +27,3 @@ export default function (state = initialState, action) {
       return state
   }
 }
-
-// const actionHandlers = {
-//   [constants.FETCH_USER]: (state, action) => ({ user: action.user }),
-//   [constants.FETCH_USER_POSTS]: (state, action) => (
-//     {
-//       posts: Object.assign({}, state.posts, {
-//         user: action.posts,
-//         pagination: action.pagination
-//       })
-//     })
-// }
-//
-// export default createReducer(initialState, actionHandlers)
