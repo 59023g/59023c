@@ -1,3 +1,5 @@
+require( 'console-group' ).install()
+
 export default function logger ({ getState }) {
   return next => action => {
     console.group()
