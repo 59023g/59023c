@@ -1,6 +1,7 @@
 import express from 'express'
 import path from 'path'
 import nconf from 'nconf'
+import fs from 'fs'
 import compression from 'compression'
 
 import redis from 'redis'
@@ -10,11 +11,17 @@ import { Provider } from 'react-redux'
 import ReactDOMServer from 'react-dom/server'
 import { match, RouterContext, createRoutes } from 'react-router'
 import { IntlProvider } from 'react-intl'
+import { fetchComponentDataBeforeRender } from '../shared/utils/fetchComponentDataBeforeRender';
 
+
+import { whichApi } from 'impl/api'
+import { createLocation } from 'history/lib/LocationUtils'
 
 import Routes from '../shared/routes'
 import configureStore from '../shared/store/configureStore'
 import * as reducers from '../shared/reducers'
+
+import posts from '../mock_api/posts.json'
 
 var isProduction = nconf.get('production');
 var port = isProduction ? process.env.PORT : 3000;
@@ -25,57 +32,7 @@ var app = express()
 app.use(express.static(publicPath));
 app.use(compression())
 
-
-const intlData = {
-  locale: 'en',
-  messages: null
-}
-
-var initialState = {
-  application: {
-    token: null,
-    locale: 'en',
-    user: {
-      permissions: []
-    }
-  },
-  posts: null
-}
-
-var store = configureStore(initialState)
-var routes = createRoutes(Routes())
-
-const _initialState = store.getState()
-
-app.get('/api/posts', function (req, res) {
-  console.log(req.query)
-  console.log(req.params)
-})
-
-app.use('*', function (req, res) {
-    match({routes, location:req.url}, (error, redirectLocation, renderProps) => {
-        if (error) {
-          res.status(500).send(error.message)
-        } else if (redirectLocation) {
-          res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-        } else if (renderProps) {
-            var pageData =
-            ReactDOMServer.renderToString(
-              <Provider store={store}>
-                <IntlProvider key='intl' {...intlData}>
-                  <RouterContext {...renderProps}/>
-                </IntlProvider>
-              </Provider>
-            )
-
-            res.status(200).send(createPage(pageData, _initialState));
-        } else {
-          res.status(404).send('Not found')
-        }
-    });
-});
-
-function createPage (html, initialState) {
+const renderPage = (html, initialState) => {
   return `
     <!doctype html>
     <html>
@@ -91,5 +48,73 @@ function createPage (html, initialState) {
     </html>
     `
 }
+
+const intlData = {
+  locale: 'en',
+  messages: null
+}
+async function send(res, result) {
+  try {
+    let obj = await result;
+    res.set('Content-Type', 'application/json');
+    res.send(JSON.stringify(obj));
+  }
+  catch(e) {
+    res.status(500).send(e.message);
+  }
+}
+
+app.get('/api/posts', function (req, res) {
+  var data = fs.readFileSync(path.join(__dirname + '/../mock_api/posts.json'), 'utf8')
+  send(res, JSON.parse(data))
+
+})
+
+app.use('*', function (req, res) {
+
+  const routes = createRoutes(Routes())
+  const location = createLocation(req.url)
+
+  match({ routes, location }, (err, redirectLocation, renderProps) => {
+
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Internal Server Error')
+    }
+
+    if (redirectLocation) {
+      return res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+    }
+
+    if (!renderProps) {
+      return res.status(404).send('Not found')
+    }
+
+    const store = configureStore()
+
+    const initialView = (
+      <Provider store={store}>
+        <IntlProvider key='intl' {...intlData}>
+            <RouterContext {...renderProps}/>
+        </IntlProvider>
+      </Provider>
+    )
+
+    fetchComponentDataBeforeRender(store.dispatch, renderProps.components, renderProps.params)
+      .then(html => {
+        const componentHTML = ReactDOMServer.renderToString(initialView)
+        const initialState = store.getState()
+        res.status(200).end(renderPage(componentHTML, initialState))
+      })
+      .catch(err => {
+        console.log('catch:', err)
+        res.status(500).end(renderPage("", {}))
+      })
+
+
+  });
+});
+
+
 
 module.exports = app
