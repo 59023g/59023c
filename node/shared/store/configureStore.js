@@ -6,6 +6,7 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 // import createHashHistory from 'history/lib/createHashHistory'
 import thunk from 'redux-thunk'
 import logger from '../middleware/logger'
+import promiseMiddleware from '../middleware/promiseMiddleware';
 
 // todo - client only
 // import persistenceStore from '../utils/store'
@@ -19,7 +20,7 @@ if (typeof __DEVTOOLS__ !== 'undefined' && __DEVTOOLS__) {
 }
 
 const finalCreateStore = compose(
-  applyMiddleware(thunk, logger),
+  applyMiddleware(thunk, promiseMiddleware, logger),
 )(createStore)
 
 const combinedReducer = combineReducers(
