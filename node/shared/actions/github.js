@@ -1,4 +1,3 @@
-// import 'whatwg-fetch'
 import parseLinkHeader from 'parse-link-header'
 import handleActionError from '../utils/handleActionError'
 import processResponse from '../utils/process-response'

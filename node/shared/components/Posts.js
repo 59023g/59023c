@@ -11,14 +11,12 @@ export default class Posts extends React.Component {
 
   onSubmit (e) {
     e.preventDefault()
-    console.log(this.state)
   }
   componentWillUpdate () {}
   componentWillReceiveProps () {
   }
 
   onChange (e) {
-    console.log(e.target.value)
 
     let nextState = {},
       targetName = e.target.name

@@ -11,12 +11,6 @@ import DevTools from '../shared/components/DevTools'
 
 import whichApi from 'impl/api'
 
-function apiTest() {
-  whichApi()
-}
-
-apiTest()
-
 import configureStore from '../shared/store/configureStore'
 import Routes from '../shared/routes'
 import Root from './Root'
