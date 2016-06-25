@@ -80,6 +80,7 @@ function onBuild(err, stats) {
 var frontendConfig = config({
   devtool: 'eval',
   entry: [
+    'babel-polyfill',
     './client/index.js'
   ],
   output: {
@@ -155,7 +156,9 @@ fs.readdirSync('node_modules')
 node_modules['react/addons', 'react-dom/server'] = 'commonjs react/addons';
 
 var backendConfig = config({
-    entry: ['./server/index.js'],
+    entry: [
+      'babel-polyfill',
+      './server/index.js'],
     output: {
       path: path.join(__dirname, 'build'),
       filename: 'server.js'
