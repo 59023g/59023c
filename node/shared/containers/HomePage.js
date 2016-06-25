@@ -9,23 +9,24 @@ import { defineMessages, FormattedMessage } from 'react-intl'
 import ShortPost from '../components/ShortPost'
 import { fetchPosts } from '../actions/posts'
 
-
 const messages = defineMessages({
   welcome: {
     id: 'home.welcome',
-    description: 'Welcome message to the user',
-    defaultMessage: 'Welcome'
+    description: 'welcome',
+    defaultMessage: 'welcom'
   },
   intro: {
     id: 'home.intro',
-    description: 'Introductive message about the website',
-    defaultMessage: 'This website is a boilerplate example to showcase and ' +
-      'provide best practices around '
+    description: 'texttt',
+    defaultMessage: 'text'
   }
 })
 
 function loadData (props) {
-  props.fetchPosts()
+  props.fetchPosts().then(() => {
+    console.log('what')
+    console.log(store.getState())
+  })
 }
 
 
@@ -45,11 +46,28 @@ export default class HomePage extends React.Component {
   }
 
   componentWillMount () {
-    loadData(this.props)
+    console.log('componentWillMount(): HomePage')
+
+    // loadData(this.props)
+    this.props.fetchPosts().then(() => {
+      console.log('store state', store.getState())
+    })
+    
   }
 
   render () {
-    let posts = this.props.posts.posts
+
+    if(!this.props.posts.posts) {
+      return null;
+    }
+    const posts = this.props.posts.posts;
+
+    // let posts = this.props.posts.posts
+
+
+
+    console.log('posts', posts)
+    console.log('render(): HomePage')
 
     return (
       <div>
@@ -63,7 +81,7 @@ export default class HomePage extends React.Component {
             <FormattedMessage {...messages.intro} />
           </p>
           <ul>
-            {posts.map(function (post, index) {
+            { posts.map(function (post, index) {
               return (
                <ShortPost
                  key={index}
