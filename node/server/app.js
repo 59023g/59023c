@@ -95,11 +95,12 @@ app.use('*', function (req, res) {
     const initialView = (
       <Provider store={store}>
         <IntlProvider key='intl' {...intlData}>
-            <RouterContext {...renderProps}/>
+          <RouterContext {...renderProps}/>
         </IntlProvider>
       </Provider>
     )
 
+    // note - looks for component promises (needs) before end (via caljrimmer)
     fetchComponentDataBeforeRender(store.dispatch, renderProps.components, renderProps.params)
       .then(html => {
         const componentHTML = ReactDOMServer.renderToString(initialView)
@@ -111,10 +112,8 @@ app.use('*', function (req, res) {
         res.status(500).end(renderPage("", {}))
       })
 
-
-  });
-});
-
+  })
+})
 
 
 module.exports = app
