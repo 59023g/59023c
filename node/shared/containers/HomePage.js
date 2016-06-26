@@ -1,5 +1,3 @@
-/*eslint-disable max-len*/
-
 // containers/HomePage
 
 import React, { PropTypes } from 'react'
@@ -7,7 +5,8 @@ import { connect } from 'react-redux'
 import { defineMessages, FormattedMessage } from 'react-intl'
 
 import ShortPost from '../components/ShortPost'
-import { fetchPosts } from '../actions/posts'
+import { fetchPostsIfNeeded } from '../actions/posts'
+
 
 const messages = defineMessages({
   welcome: {
@@ -22,17 +21,14 @@ const messages = defineMessages({
   }
 })
 
-function loadData (props) {
-  props.fetchPosts().then(() => {
-    console.log('what')
-    console.log(store.getState())
-  })
-}
-
-
 export default class HomePage extends React.Component {
+
+  constructor (props) {
+    super(props)
+  }
+
   static propTypes = {
-    fetchPosts: PropTypes.func.isRequired,
+    fetchPostsIfNeeded: PropTypes.func.isRequired,
     posts: PropTypes.object.isRequired
   }
 
@@ -41,18 +37,8 @@ export default class HomePage extends React.Component {
     history: PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super(props)
-  }
-
   componentWillMount () {
-    console.log('componentWillMount(): HomePage')
-
-    // loadData(this.props)
-    this.props.fetchPosts().then(() => {
-      console.log('store state', store.getState())
-    })
-    
+    this.props.fetchPostsIfNeeded()
   }
 
   render () {
@@ -61,13 +47,6 @@ export default class HomePage extends React.Component {
       return null;
     }
     const posts = this.props.posts.posts;
-
-    // let posts = this.props.posts.posts
-
-
-
-    console.log('posts', posts)
-    console.log('render(): HomePage')
 
     return (
       <div>
@@ -101,7 +80,13 @@ export default class HomePage extends React.Component {
   }
 }
 
+// note - server side render waits until this call returns -
+// see fetchComponentDataBeforeRender()
+HomePage.need = [
+  fetchPostsIfNeeded
+]
+
 export default connect(
-  ({ posts }) => ({ posts }),
-  { fetchPosts }
+  ({ application, posts }) => ({ application, posts }),
+  { fetchPostsIfNeeded }
 )(HomePage)
