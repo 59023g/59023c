@@ -2,12 +2,11 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import DevTools from './DevTools'
+import DevTools from '../components/DevTools'
 
-
-import Menu from './Menu'
-import Footer from './Footer'
-import DisplayError from './DisplayError'
+import Menu from '../components/Menu'
+import Footer from '../components/Footer'
+import DisplayError from '../components/DisplayError'
 
 let divStyle = {
   backgroundColor: 'aliceblue',
@@ -46,8 +45,9 @@ export default class Application extends React.Component {
 
     const isFetching = () => {
       if (
-        Boolean(this.props.application.isFetching)
-        || Boolean(this.props.posts.isFetching)
+        false
+        // Boolean(this.props.application.isFetching)
+        // || Boolean(this.props.posts.isFetching)
       )
         return (
           <div style={divStyle}>Loading</div>
