@@ -1,4 +1,4 @@
-export { default as Application } from './Application'
+export { default as Application } from '../containers/Application'
 
 export { default as Account } from '../containers/Account'
 export { default as MetaHome } from '../containers/MetaHome'
