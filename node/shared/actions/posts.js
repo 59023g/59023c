@@ -1,15 +1,17 @@
 // actions/posts
-
 import handleActionError from '../utils/handleActionError'
 import processResponse from '../utils/process-response'
+import api from 'impl/api'
 
 import {
   REQUEST_POSTS,
   RECEIVE_POSTS,
 } from '../constants'
 
-const POSTS_API = '/api/posts'
-
+// note - tests api implementation, server or client
+(function apiTest() {
+  api.whichApi()
+})()
 
 function requestPosts () {
   return {
@@ -25,18 +27,36 @@ function receivePosts (payload) {
   }
 }
 
-// todo - check cache first or diff - this call not always necc.
-export function fetchPosts () {
+// todo - make this smarter, namely if posts != invalidated
+function shouldFetchPosts(state) {
+  const posts = state.posts
+  if (posts.posts.length === 0) {
+    return true
+  } else if (posts.isFetching) {
+    return false
+  } else {
+    return posts.didInvalidate
+  }
+}
+
+export function fetchPostsIfNeeded() {
+  return (dispatch, getState) => {
+    if (shouldFetchPosts(getState())) {
+      return dispatch(fetchPosts())
+    }
+  }
+}
+
+function fetchPosts () {
   return function (dispatch) {
     dispatch(requestPosts())
-    return fetch(POSTS_API)
+    return api.queryPosts()
       .then(processResponse)
       .then(res => {
-        setTimeout( () => {
-          dispatch(receivePosts(res))
-        }, 2000)
-
+        dispatch(receivePosts(res))
       })
-      .catch(error => handleActionError(dispatch, error, REQUEST_POSTS))
+      .catch(error => {
+        handleActionError(dispatch, error, REQUEST_POSTS)
+      })
   }
 }
