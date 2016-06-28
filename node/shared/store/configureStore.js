@@ -5,7 +5,6 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 // import createBrowserHistory from 'history/lib/createBrowserHistory'
 // import createHashHistory from 'history/lib/createHashHistory'
 import thunk from 'redux-thunk'
-import logger from '../middleware/logger'
 import promiseMiddleware from '../middleware/promiseMiddleware';
 import createLogger from 'redux-logger';
 
