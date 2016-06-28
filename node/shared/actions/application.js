@@ -10,7 +10,7 @@ import {
 import handleActionError from '../utils/handleActionError'
 import processResponse from '../utils/process-response'
 
-const USER_API = '/user.json'
+const USER_API = '/api/login'
 
 export function login (form, redirect) {
 
