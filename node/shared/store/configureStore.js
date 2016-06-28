@@ -7,20 +7,27 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import logger from '../middleware/logger'
 import promiseMiddleware from '../middleware/promiseMiddleware';
+import createLogger from 'redux-logger';
 
 // todo - client only
 // import persistenceStore from '../utils/store'
 
+let storeEnhancers = []
+
+import DevTools from '../components/DevTools'
 import * as reducers from '../reducers'
 import { routerReducer } from 'react-router-redux'
 
-if (typeof __DEVTOOLS__ !== 'undefined' && __DEVTOOLS__) {
+if (process.env.NODE_ENV !== 'production') {
   const DevTools = require('../components/DevTools').default
   storeEnhancers.push(DevTools.instrument())
 }
 
+
+// todo - clean this up, dev/prod
 const finalCreateStore = compose(
-  applyMiddleware(thunk, promiseMiddleware, logger),
+  applyMiddleware(thunk, promiseMiddleware, createLogger())
+  // , DevTools.instrument()
 )(createStore)
 
 const combinedReducer = combineReducers(

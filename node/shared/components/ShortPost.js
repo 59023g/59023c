@@ -20,7 +20,7 @@ export default React.createClass({
     <li>
       <Link to={
           this.props.username +
-          '/' +
+          '/' + this.props.updatedAt +
           this.props.url} >
         <h2 dangerouslySetInnerHTML={this.rawMarkup(this.props.title)}></h2>
       </Link>
