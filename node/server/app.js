@@ -70,7 +70,12 @@ app.get('/api/posts', function (req, res) {
 
 })
 
-app.use('*', function (req, res) {
+app.get('/api/login', function (req, res) {
+  var data = fs.readFileSync(path.join(__dirname + '/../mock_api/user.json'), 'utf8')
+  send(res, JSON.parse(data))
+})
+
+app.get('*', function (req, res) {
 
   const routes = createRoutes(Routes())
   const location = createLocation(req.url)
