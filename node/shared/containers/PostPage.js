@@ -1,21 +1,31 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { getPost } from '../actions/posts'
+
+// postsById todosById: { id -> todo }
+// and todos: array<id>
 
 
-export default class Post extends React.Component {
+export default class PostPage extends React.Component {
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props) {
+    super(props)
+  }
+
+  componentWillMount () {
+    const id = this.props.params.id
+    console.log('id', id)
+    // this.props.getPost('url')
   }
 
   static propTypes = {
-    user: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    abstract: PropTypes.string,
-    tags: PropTypes.array,
-    updatedAt: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired
+    getPost: PropTypes.func.isRequired,
+    posts: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    store: PropTypes.any,
+    history: PropTypes.object.isRequired
   }
 
   rawMarkup (value) {
@@ -25,17 +35,17 @@ export default class Post extends React.Component {
   render () {
     return (
     <li>
-      <span>test</span>
-      <h2 dangerouslySetInnerHTML={this.rawMarkup(this.props.title)}></h2>
-      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.content)}></p>
-      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.abstract)}></p>
-      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.tags)}></p>
-      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.updatedAt)}></p>
+      <span>test</  span>
     </li>
     )
   }
 }
 
+// PostPage.need = [
+//   getPost
+// ]
+
 export default connect(
-  ({ application }) => ({ application })
-)(Post)
+  ({ application, posts }) => ({ application, posts }),
+  { getPost }
+)(PostPage)
