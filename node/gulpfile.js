@@ -310,7 +310,7 @@ gulp.task('bin-watch', function(done) {
 gulp.task('build', ['backend', 'frontend']);
 gulp.task('watch', ['backend-watch', 'frontend-watch']);
 
-gulp.task('run', ['backend-watch', 'frontend-watch'], function() {
+gulp.task('default', ['backend-watch', 'frontend-watch'], function() {
   nodemon({
     execMap: {
       js: 'node'
