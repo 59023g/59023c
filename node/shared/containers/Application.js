@@ -18,6 +18,8 @@ let divStyle = {
   left: '0'
 }
 
+
+
 export default class Application extends React.Component {
 
   static propTypes = {
@@ -25,6 +27,27 @@ export default class Application extends React.Component {
     application: PropTypes.object.isRequired,
     posts: PropTypes.object.isRequired
   };
+
+  static contextTypes = {
+    store: PropTypes.any,
+    history: PropTypes.object.isRequired
+  }
+
+   requireAuth (nextState, replaceState) {
+    const state = store.getState()
+    const isLoggedIn = Boolean(state.application.token)
+    console.log('isLoggedIn', isLoggedIn)
+    if (!isLoggedIn)
+      replaceState({
+        nextPathname: nextState.location.pathname
+      }, '/login')
+  }
+
+ logout (nextState, replaceState) {
+    store.dispatch({ type: constants.LOG_OUT })
+    replaceState({}, '/')
+  }
+
 
   constructor (props, context) {
     super(props, context)
@@ -45,9 +68,8 @@ export default class Application extends React.Component {
 
     const isFetching = () => {
       if (
-        false
-        // Boolean(this.props.application.isFetching)
-        // || Boolean(this.props.posts.isFetching)
+        Boolean(this.props.application.isFetching)
+        || Boolean(this.props.posts.isFetching)
       )
         return (
           <div style={divStyle}>Loading</div>
@@ -83,7 +105,6 @@ export default class Application extends React.Component {
         </div>
 
         <Footer />
-        <DevTools />
       </div>
     )
   }
@@ -92,3 +113,5 @@ export default class Application extends React.Component {
 export default connect(
   ({ application, posts }) => ({ application,posts })
 )(Application)
+
+// export { requireAuth, logout }
