@@ -14,13 +14,14 @@ export default class PostPage extends React.Component {
 
   componentWillMount () {
     const id = this.props.params.id
-    console.log('id', id)
-    // this.props.getPost('url')
+    const post = this.props.getPost(id)
+    console.log(post)
+
+
   }
 
   static propTypes = {
-    getPost: PropTypes.func.isRequired,
-    posts: PropTypes.object.isRequired
+    getPost: PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -35,17 +36,20 @@ export default class PostPage extends React.Component {
   render () {
     return (
     <li>
-      <span>test</  span>
+      <span>test</span>
     </li>
     )
   }
 }
 
-// PostPage.need = [
-//   getPost
-// ]
+PostPage.need = [
+  getPost
+]
 
 export default connect(
   ({ application, posts }) => ({ application, posts }),
   { getPost }
 )(PostPage)
+
+
+// Our product philosophy is "great design above all" . This is evidenced in the pixel perfection that we strive to achieve with our product. To get great design into the hands of the actual user, there's always the need for engineers who "get it." Key responsibilities will include creation of new UI feature sets in our core product offerings. Bridging the gap between creative ideation and functional, cutting-edge, web standards. Being involved in weekly tech shares and code reviews and staying abreast of the latest in front-end technology developments involving everything from our own KD Framework to build systems (gulp, grunt, webpack, browserify etc.), css precompilers (scss/less/stylus etc.), mvc frameworks (React, Angular, EmberJS etc.).
