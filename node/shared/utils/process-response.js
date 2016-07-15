@@ -1,3 +1,4 @@
+
 export default function processResponse (response) {
   let isOk = response.ok
   return response.text()
