@@ -65,13 +65,14 @@ export default class HomePage extends React.Component {
                <ShortPost
                  key={index}
                  user={post.user}
-                 username={post.username}
+                 username={post.author.username}
                  title={post.title}
                  content={post.content}
                  abstract={post.abstract}
                  tags={post.tags}
                  updatedAt={post.updatedAt}
-                 url={post.url}/>)
+                 url={post.url}
+                 id={post.id}/>)
             })}
           </ul>
         </div>
