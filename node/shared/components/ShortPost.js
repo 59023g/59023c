@@ -10,7 +10,8 @@ export default React.createClass({
     abstract: PropTypes.string,
     tags: PropTypes.array,
     updatedAt: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired
+    url: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired
   },
   rawMarkup: function (value) {
     return { __html: value }
@@ -18,16 +19,14 @@ export default React.createClass({
   render: function () {
     return (
     <li>
-      <Link to={
-          this.props.username +
-          '/' + this.props.updatedAt +
-          this.props.url} >
+      <Link to={`${this.props.username}/${this.props.updatedAt}/${this.props.url}/${this.props.id}`}>
         <h2 dangerouslySetInnerHTML={this.rawMarkup(this.props.title)}></h2>
       </Link>
       <p dangerouslySetInnerHTML={this.rawMarkup(this.props.content)}></p>
       <p dangerouslySetInnerHTML={this.rawMarkup(this.props.abstract)}></p>
       <p dangerouslySetInnerHTML={this.rawMarkup(this.props.tags)}></p>
       <p dangerouslySetInnerHTML={this.rawMarkup(this.props.updatedAt)}></p>
+      <p dangerouslySetInnerHTML={this.rawMarkup(this.props.id)}></p>
     </li>
     )
   }
