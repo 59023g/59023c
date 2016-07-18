@@ -18,19 +18,12 @@ let divStyle = {
   left: '0'
 }
 
-
-
 export default class Application extends React.Component {
 
-  static propTypes = {
-    children: PropTypes.any,
-    application: PropTypes.object.isRequired,
-    posts: PropTypes.object.isRequired
-  };
-
-  static contextTypes = {
-    store: PropTypes.any,
-    history: PropTypes.object.isRequired
+  constructor (props, context) {
+    super(props, context)
+    this.handleMenuClick = this.handleMenuClick.bind(this)
+    this.state = { isMenuActive: false }
   }
 
    requireAuth (nextState, replaceState) {
@@ -46,17 +39,6 @@ export default class Application extends React.Component {
  logout (nextState, replaceState) {
     store.dispatch({ type: constants.LOG_OUT })
     replaceState({}, '/')
-  }
-
-
-  constructor (props, context) {
-    super(props, context)
-
-    this.handleMenuClick = this.handleMenuClick.bind(this)
-
-    this.state = {
-      isMenuActive: false
-    }
   }
 
   handleMenuClick (evt) {
@@ -91,7 +73,6 @@ export default class Application extends React.Component {
         return undefined
     }
 
-
     return (
       <div id="layout" className={activeClass}>
       <Link to="/">Home </Link>
@@ -110,8 +91,23 @@ export default class Application extends React.Component {
   }
 }
 
-export default connect(
-  ({ application, posts }) => ({ application,posts })
-)(Application)
+Application.propTypes = {
+  children: PropTypes.any,
+  application: PropTypes.object.isRequired,
+  posts: PropTypes.object.isRequired
+};
+
+Application.contextTypes = {
+  store: PropTypes.any
+}
+
+function mapStateToProps(state, ownProps) {
+  console.log(state, ownProps)
+  return {
+    application: state.application,
+    posts: state.posts
+  }
+}
+export default connect(mapStateToProps, {})(Application)
 
 // export { requireAuth, logout }
