@@ -23,7 +23,7 @@ function fetchPost(id) {
     [CALL_API]: {
       types: [ REQUEST_POST, RECEIVE_POST_SUCCESS, RECEIVE_POST_FAILURE],
       endpoint: `posts`,
-      schema: Schemas.POST_ARRAY
+      schema: Schemas.POST
     }
   }
 }
@@ -34,7 +34,7 @@ function fetchPosts() {
     [CALL_API]: {
       types: [ REQUEST_POSTS, RECEIVE_POSTS_SUCCESS, RECEIVE_POSTS_FAILURE],
       endpoint: `posts`,
-      schema: Schemas.POST
+      schema: Schemas.POST_ARRAY
     }
   }
 }
