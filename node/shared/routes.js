@@ -33,8 +33,8 @@ function load(nextState) {
 export default function () {
   return (
       <Route component={ Application }>
-        <Route path="/:username" component={ HomePage } />
-        <Route path="/:username/:date/:postTitle/:id" component={ PostPage } />
+        <Route path="/:deity" component={ HomePage } />
+        <Route path="/:deity/:date/:postTitle/:id" component={ PostPage } />
         <Route path="meta" component={ MetaHome } onEnter={ requireAccess }>
           <Route path="secret-area" component={ SuperSecretArea } />
         </Route>
