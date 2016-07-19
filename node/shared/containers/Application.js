@@ -8,6 +8,8 @@ import Menu from '../components/Menu'
 import Footer from '../components/Footer'
 import DisplayError from '../components/DisplayError'
 
+import { resetErrorMessage } from '../actions/application'
+
 let divStyle = {
   backgroundColor: 'aliceblue',
   width: '100%',
@@ -23,6 +25,7 @@ export default class Application extends React.Component {
   constructor (props, context) {
     super(props, context)
     this.handleMenuClick = this.handleMenuClick.bind(this)
+    this.handleDismissClick = this.handleDismissClick.bind(this)
     this.state = { isMenuActive: false }
   }
 
@@ -46,12 +49,35 @@ export default class Application extends React.Component {
     this.setState({ isMenuActive: !this.state.isMenuActive })
   }
 
+  handleDismissClick(e) {
+    this.props.resetErrorMessage()
+    e.preventDefault()
+  }
+
+  renderErrorMessage() {
+    const { errorMessage } = this.props
+    if (!errorMessage) {
+      return null
+    }
+
+    return (
+      <p style={{ backgroundColor: '#e99', padding: 10 }}>
+        <b>{errorMessage}</b>
+        {' '}
+        (<a href="#"
+            onClick={this.handleDismissClick}>
+          Dismiss
+        </a>)
+      </p>
+    )
+  }
+
   render () {
 
     const isFetching = () => {
       if (
         Boolean(this.props.application.isFetching)
-        || Boolean(this.props.posts.isFetching)
+        // || Boolean(this.props.posts.isFetching)
       )
         return (
           <div style={divStyle}>Loading</div>
@@ -80,9 +106,10 @@ export default class Application extends React.Component {
 
         {showMenu()}
         {isFetching()}
+        { this.renderErrorMessage() }
+
         <div id="main">
-          <DisplayError />
-          {this.props.children}
+          { this.props.children }
         </div>
 
         <Footer />
@@ -92,6 +119,8 @@ export default class Application extends React.Component {
 }
 
 Application.propTypes = {
+  errorMessage: PropTypes.string,
+  resetErrorMessage: PropTypes.func.isRequired,
   children: PropTypes.any,
   application: PropTypes.object.isRequired,
   posts: PropTypes.object.isRequired
@@ -103,10 +132,13 @@ Application.contextTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
+    errorMessage: state.errorMessage,
     application: state.application,
-    posts: state.posts
+    entities: state.entities
   }
 }
-export default connect(mapStateToProps, {})(Application)
+export default connect(mapStateToProps, {
+  resetErrorMessage
+})(Application)
 
 // export { requireAuth, logout }

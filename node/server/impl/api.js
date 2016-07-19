@@ -6,20 +6,13 @@ function whichApi () {
   console.log('server api')
 }
 
-function queryPosts() {
+function get(fullUrl) {
   console.log('server queryPosts')
-  // return posts
-  return fetch(POSTS_API)
-
-  // .then(res => {
-  //   console.log('res', res)
-  // })
-    // .then(res => console.log('server', res))
+  return fetch(fullUrl)
 }
 
 
 module.exports = {
   whichApi,
-  queryPosts
-
+  get
 }

@@ -5,11 +5,11 @@ import { connect } from 'react-redux'
 import { defineMessages, FormattedMessage } from 'react-intl'
 
 import ShortPost from '../components/ShortPost'
-import { fetchPosts } from '../actions/posts'
+import { loadPosts } from '../actions/posts'
 
 
 function loadData(props) {
-  props.fetchPosts()
+  props.loadPosts()
 }
 
 export default class HomePage extends React.Component {
@@ -19,17 +19,18 @@ export default class HomePage extends React.Component {
   }
 
   componentWillMount () {
-    this.props.loadData()
+    loadData(this.props)
   }
 
   render () {
+    return (<div>HomePage render</div>)
 
-    if(!this.props.posts.posts) {
-      return null;
-    }
-    const posts = this.props.posts.posts;
-
-    console.log('posts', this.props.posts)
+    // if(!this.props.posts.posts) {
+    //   return null;
+    // }
+    // const posts = this.props.posts.posts;
+    //
+    // console.log('posts', this.props.posts)
     // return (
     //   <div>
     //     <div className="content">
@@ -59,7 +60,7 @@ export default class HomePage extends React.Component {
 HomePage.propTypes = {
   // fetchPostsIfNeeded: PropTypes.func.isRequired,
   // selectedPosts: PropTypes.array.isRequired,
-  fetchPosts: PropTypes.func.isRequired,
+  loadPosts: PropTypes.func.isRequired,
   posts: PropTypes.object.isRequired
 }
 
@@ -76,9 +77,8 @@ function mapStateToProps(state, ownProps) {
 // note - server side render waits until this call returns -
 // see fetchComponentDataBeforeRender()
 HomePage.need = [
-  // fetchPostsIfNeeded
-  fetchPosts
+  loadPosts
 ]
 
-export default connect(mapStateToProps, { fetchPosts }
+export default connect(mapStateToProps, { loadPosts }
 )(HomePage)
