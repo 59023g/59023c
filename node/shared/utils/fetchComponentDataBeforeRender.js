@@ -3,6 +3,7 @@ export function fetchComponentDataBeforeRender(dispatch, components, params) {
 
   const needs = components.reduce( (prev, current) => {
 
+    console.log('current', current.need )
     if (!current)
       return []
 
@@ -12,5 +13,7 @@ export function fetchComponentDataBeforeRender(dispatch, components, params) {
     }, []);
 
     const promises = needs.map(need => dispatch(need()));
+    console.log('need', promises)
+
     return Promise.all(promises);
 }

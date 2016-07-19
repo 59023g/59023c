@@ -9,6 +9,8 @@ import Footer from '../components/Footer'
 import DisplayError from '../components/DisplayError'
 
 import { resetErrorMessage } from '../actions/application'
+import { loadPosts } from '../actions/posts'
+
 
 let divStyle = {
   backgroundColor: 'aliceblue',
@@ -20,6 +22,11 @@ let divStyle = {
   left: '0'
 }
 
+function loadData(props) {
+  props.loadPosts(props.deity)
+}
+
+
 export default class Application extends React.Component {
 
   constructor (props, context) {
@@ -27,6 +34,11 @@ export default class Application extends React.Component {
     this.handleMenuClick = this.handleMenuClick.bind(this)
     this.handleDismissClick = this.handleDismissClick.bind(this)
     this.state = { isMenuActive: false }
+  }
+
+  componentWillMount () {
+    loadData(this.props)
+    // this.props.loadPosts(this.props.deity)
   }
 
    requireAuth (nextState, replaceState) {
@@ -123,22 +135,29 @@ Application.propTypes = {
   resetErrorMessage: PropTypes.func.isRequired,
   children: PropTypes.any,
   application: PropTypes.object.isRequired,
+  loadPosts: PropTypes.func.isRequired,
   posts: PropTypes.object.isRequired
+
 };
 
 Application.contextTypes = {
   store: PropTypes.any
 }
 
+Application.need = [
+  loadPosts
+]
+
 function mapStateToProps(state, ownProps) {
   return {
     errorMessage: state.errorMessage,
     application: state.application,
-    entities: state.entities
+    posts: state.posts
   }
 }
 export default connect(mapStateToProps, {
-  resetErrorMessage
+  resetErrorMessage,
+  loadPosts
 })(Application)
 
 // export { requireAuth, logout }

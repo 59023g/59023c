@@ -1,36 +1,13 @@
 import { Schema, arrayOf, normalize } from 'normalizr'
 import api from 'impl/api'
 
-const API_ROOT = 'http://localhost:3001/api/'
-
-// Fetches an API response and normalizes the result JSON according to schema.
-// This makes every API response have the same shape, regardless of how nested it was.
-function callApi(endpoint, schema) {
-  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
-
-  return api.get(fullUrl)
-    .then(response =>
-      response.json().then(json => ({ json, response }))
-    )
-    .then(({ json, response }) => {
-      console.log('json', json, 'response', response)
-
-      if (!response.ok) {
-        return Promise.reject(json)
-      }
-
-      return Object.assign({},
-        normalize(json, schema), {}
-      )
-    })
-}
-
-const userSchema = new Schema('users', {
+// Schemas
+const userSchema = new Schema('deities', {
   idAttribute: 'id'
 })
 
-const postSchema = new Schema('posts', {
-  idAttribute: 'id'
+const postSchema = new Schema('items', {
+  idAttribute: 'url'
 })
 
 postSchema.define({
@@ -44,6 +21,28 @@ export const Schemas = {
   POST_ARRAY: arrayOf(postSchema)
 }
 
+const API_ROOT = 'http://localhost:3001/api/'
+
+// Fetches an API response and normalizes the result JSON according to schema.
+// This makes every API response have the same shape, regardless of how nested it was.
+function callApi(endpoint, schema) {
+  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
+
+  return api.get(fullUrl)
+    .then(response =>
+      response.json().then(json => ({ json, response }))
+    )
+    .then(({ json, response }) => {
+
+      if (!response.ok) {
+        return Promise.reject(json)
+      }
+
+      return Promise.resolve(Object.assign({},
+        normalize(json, schema), {}
+      ))
+    })
+}
 // Action key that carries API call info interpreted by this Redux middleware.
 export const CALL_API = Symbol('Call API')
 
@@ -82,7 +81,6 @@ export default store => next => action => {
   }
 
   const [ requestType, successType, failureType ] = types
-  next(actionWith({ type: requestType }))
 
   return callApi(endpoint, schema).then(
     response => next(actionWith({

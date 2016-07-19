@@ -1,37 +1,25 @@
-import {
-  REQUEST_POSTS,
-  RECEIVE_POSTS_SUCCESS,
-  RECEIVE_POSTS_FAILURE
-} from '../constants'
 
-// const initialState = {
-//   isFetching: false,
-//   didInvalidate: false,
-//   receivedAt: null,
-//   posts: []
-// }
+const initial = {
+  entities: {},
+  selected: {},
+  isFetching: null
+}
+export default function (state, action) {
+  if(typeof state === 'undefined')
+    return initial
 
-// export default function (state = initialState, action) {
-//   switch (action.type) {
-//     case REQUEST_POSTS:
-//       return Object.assign({}, state, {
-//         ...state,
-//         isFetching: true
-//       })
-//     case RECEIVE_POSTS:
-//       console.log('reducer', action)
-//       return Object.assign({}, state, {
-//         isFetching: false,
-//         receivedAt: action.receivedAt,
-//         ...action.payload
-//       })
-//     default:
-//       return state
-//   }
-// }
-export default function (state = { users: {}, posts: {} }, action) {
-  if (action.response && action.response.entities) {
-    return Object.assign(({}, state, action.response.entities))
+  if (action.type === 'REQUEST_POSTS') {
+    return Object.assign(({}, state, {
+      isFetching: true
+    }))
+  }
+
+  if (action.type === 'RECEIVE_POSTS_SUCCESS') {
+    return Object.assign(({}, state, {
+      entities: action.response.entities,
+      selected: action.response.result,
+      isFetching: false
+    }))
   }
 
   return state

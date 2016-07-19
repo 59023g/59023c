@@ -9,7 +9,7 @@ import { loadPosts } from '../actions/posts'
 
 
 function loadData(props) {
-  props.loadPosts()
+  props.loadPosts(props.deity)
 }
 
 export default class HomePage extends React.Component {
@@ -19,48 +19,53 @@ export default class HomePage extends React.Component {
   }
 
   componentWillMount () {
-    loadData(this.props)
+    // loadData(this.props)
+    // this.props.loadPosts(this.props.deity)
   }
 
   render () {
-    return (<div>HomePage render</div>)
 
-    // if(!this.props.posts.posts) {
-    //   return null;
-    // }
-    // const posts = this.props.posts.posts;
-    //
-    // console.log('posts', this.props.posts)
-    // return (
-    //   <div>
-    //     <div className="content">
-    //       <ul>
-    //         { posts.map(function (post, index) {
-    //           return (
-    //            <ShortPost
-    //              key={index}
-    //              user={post.user}
-    //              username={post.author.username}
-    //              title={post.title}
-    //              content={post.content}
-    //              abstract={post.abstract}
-    //              tags={post.tags}
-    //              updatedAt={post.updatedAt}
-    //              url={post.url}
-    //              id={post.id}/>)
-    //         })}
-    //       </ul>
-    //     </div>
-    //   </div>
-    // )
+    if(!this.props.posts.posts) {
+      return null;
+    }
+    // const posts = this.props.posts.entities.items
+    console.log('render')
+    console.log('sssweet', this.props.posts)
+    return (
+      <div>
+        <div className="content">
+          <ul>
+            { posts.map(function (post, index) {
+              return (
+               <ShortPost
+                 key={index}
+                 user={post.user}
+                 username={post.author.username}
+                 title={post.title}
+                 content={post.content}
+                 abstract={post.abstract}
+                 tags={post.tags}
+                 updatedAt={post.updatedAt}
+                 url={post.url}
+                 id={post.id}/>)
+            })}
+          </ul>
+        </div>
+      </div>
+    )
   }
 }
 
+// note - server side render waits until this call returns -
+// see fetchComponentDataBeforeRender()
+// HomePage.need = [
+//   loadPosts
+// ]
 
 HomePage.propTypes = {
   // fetchPostsIfNeeded: PropTypes.func.isRequired,
   // selectedPosts: PropTypes.array.isRequired,
-  loadPosts: PropTypes.func.isRequired,
+  // loadPosts: PropTypes.func.isRequired,
   posts: PropTypes.object.isRequired
 }
 
@@ -70,15 +75,13 @@ HomePage.contextTypes = {
 }
 
 function mapStateToProps(state, ownProps) {
+  const deity = ownProps.params.deity
   return {
-    posts: state.posts
+    posts: state.posts,
+    deity
   }
 }
-// note - server side render waits until this call returns -
-// see fetchComponentDataBeforeRender()
-HomePage.need = [
-  loadPosts
-]
 
-export default connect(mapStateToProps, { loadPosts }
+
+export default connect(mapStateToProps, {}
 )(HomePage)
