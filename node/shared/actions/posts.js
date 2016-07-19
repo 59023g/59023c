@@ -39,21 +39,31 @@ function fetchPosts() {
   }
 }
 
-export function loadPosts(author, nextPage) {
+export function loadPosts(deity, nextPage) {
   return (dispatch, getState) => {
-    // const {
-    //   nextPageUrl = `${author}/`,
-    //   pageCount = 0
-    // } = getState()
-    //   .pagination.starredByUser[login] || {}
+    if(shouldFetchPosts(getState())) {
+      return dispatch(fetchPosts())
+    } else {
+      console.log('posts cached')
+    }
 
-    // if (pageCount > 0 && !nextPage) {
-    //   return null
-    // }
-
-    return dispatch(fetchPosts(author))
   }
 }
+
+// todo - make this smarter, namely if posts != invalidated
+function shouldFetchPosts(state) {
+  const posts = state.posts
+  return () => {
+    if (typeof posts.entities.items === 'undefined' && posts.entities.items == null) {
+      return true
+    } else if (posts.isFetching) {
+      return false
+    } else {
+      return posts.didInvalidate
+    }
+  }
+}
+
 // export function getPost(id, requiredFields = []) {
 //   return function (dispatch, getState) {
 //
