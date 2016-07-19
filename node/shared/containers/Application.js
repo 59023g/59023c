@@ -102,7 +102,6 @@ Application.contextTypes = {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log(state, ownProps)
   return {
     application: state.application,
     posts: state.posts

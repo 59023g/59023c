@@ -47,7 +47,6 @@ PostPage.need = [
 ]
 
 export default connect(
-  ({ application, posts }) => ({ application, posts }),
   { getPost }
 )(PostPage)
 

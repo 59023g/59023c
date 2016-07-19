@@ -18,10 +18,11 @@ export default function (state = initialState, action) {
         isFetching: true
       })
     case RECEIVE_POSTS:
+      console.log('reducer', action)
       return Object.assign({}, state, {
         isFetching: false,
         receivedAt: action.receivedAt,
-        posts: action.payload
+        ...action.payload
       })
     default:
       return state

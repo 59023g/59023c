@@ -21,20 +21,14 @@ const messages = defineMessages({
   }
 })
 
+
+function loadData(props) {
+
+}
 export default class HomePage extends React.Component {
 
   constructor (props) {
     super(props)
-  }
-
-  static propTypes = {
-    fetchPostsIfNeeded: PropTypes.func.isRequired,
-    posts: PropTypes.object.isRequired
-  }
-
-  static contextTypes = {
-    store: PropTypes.any,
-    history: PropTypes.object.isRequired
   }
 
   componentWillMount () {
@@ -50,15 +44,7 @@ export default class HomePage extends React.Component {
 
     return (
       <div>
-        <div className="header">
-          <FormattedMessage {...messages.welcome}>
-            {text => <h1>{text}</h1>}
-          </FormattedMessage>
-        </div>
         <div className="content">
-          <p>
-            <FormattedMessage {...messages.intro} />
-          </p>
           <ul>
             { posts.map(function (post, index) {
               return (
@@ -81,6 +67,23 @@ export default class HomePage extends React.Component {
   }
 }
 
+
+HomePage.propTypes = {
+  fetchPostsIfNeeded: PropTypes.func.isRequired,
+  // selectedPosts: PropTypes.array.isRequired,
+  posts: PropTypes.object.isRequired
+}
+
+HomePage.contextTypes = {
+  store: PropTypes.any,
+  history: PropTypes.object.isRequired
+}
+
+function mapStateToProps(state, ownProps) {
+  return {
+
+  }
+}
 // note - server side render waits until this call returns -
 // see fetchComponentDataBeforeRender()
 HomePage.need = [

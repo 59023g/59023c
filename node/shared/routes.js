@@ -34,7 +34,7 @@ export default function () {
   return (
       <Route component={ Application }>
         <Route path="/" component={ HomePage } />
-        <Route path="/:username/:date/:postTitle/:id" component={ PostPage } onEnter={ load }/>
+        <Route path="/:username/:date/:postTitle/:id" component={ PostPage } />
         <Route path="meta" component={ MetaHome } onEnter={ requireAccess }>
           <Route path="secret-area" component={ SuperSecretArea } />
         </Route>
