@@ -3,7 +3,7 @@
 import {
   REQUEST_LOGIN,
   RECEIVE_LOGIN,
-  RESET_ERROR_MESSAGE,
+  HIDE_ERROR,
   LOCALE_SWITCHED
 } from '../constants'
 
@@ -57,11 +57,5 @@ export function switchLocale (locale) {
 export function hideError () {
   return {
     type: HIDE_ERROR
-  }
-}
-
-export function resetErrorMessage() {
-  return {
-    type: RESET_ERROR_MESSAGE
   }
 }
