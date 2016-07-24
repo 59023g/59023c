@@ -21,8 +21,6 @@ import Routes from '../shared/routes'
 import configureStore from '../shared/store/configureStore'
 import * as reducers from '../shared/reducers'
 
-// import posts from '../mock_api/posts.json'
-
 var isProduction = nconf.get('production');
 var port = isProduction ? process.env.PORT : 3000;
 
@@ -39,6 +37,7 @@ const renderPage = (html, initialState) => {
       <head>
         <meta charset="utf-8"/>
         <title>mep</title>
+        <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
       </head>
       <body>
         <script> window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>
