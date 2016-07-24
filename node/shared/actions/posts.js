@@ -1,18 +1,13 @@
 // actions/posts
-// import handleActionError from '../utils/handleActionError'
-// import processResponse from '../utils/process-response'
+import handleActionError from '../utils/handleActionError'
+import { processResponse, Schemas } from '../utils/process-response'
 import api from 'impl/api'
-// import {CALL_API, Schemas } from '../middleware/call-api'
-import { Schema, arrayOf, normalize } from 'normalizr'
-
 
 import {
-  REQUEST_POST,
-  RECEIVE_POST_SUCCESS,
-  RECEIVE_POST_FAILURE,
   REQUEST_POSTS,
+  RECEIVE_POSTS,
   RECEIVE_POSTS_SUCCESS,
-  RECEIVE_POSTS_FAILURE
+  RECEIVE_POSTS_FAILURE,
 } from '../constants'
 
 // note - tests api implementation, server or client
@@ -20,93 +15,37 @@ import {
   api.whichApi()
 })()
 
-// function fetchPost(id) {
-//   return {
-//     [CALL_API]: {
-//       types: [ REQUEST_POST, RECEIVE_POST_SUCCESS, RECEIVE_POST_FAILURE],
-//       endpoint: `posts`,
-//       schema: Schemas.POST
-//     }
-//   }
-// }
+export function getPost(id) {
+  return function (dispatch, getState) {
 
-// Schemas
-const userSchema = new Schema('deities', {
-  idAttribute: 'id'
-})
+    if (typeof id !== 'number')
+      id = parseInt(id)
 
-const postSchema = new Schema('items', {
-  idAttribute: 'url'
-})
+    const state = getState()
+    const posts = state.posts.posts
 
-postSchema.define({
-  author: userSchema
-})
+    if (posts.length > 0) {
+      const post = posts.find(post => {
+        return post.id === id
+      });
+      return post
+    } else {
 
-export const Schemas = {
-  USER: userSchema,
-  USER_ARRAY: arrayOf(userSchema),
-  POST: postSchema,
-  POST_ARRAY: arrayOf(postSchema)
+    }
+
+
+    // if(!post) {
+    //   return dispatch({
+    //     type: constants.FETCH_POST,
+    //     id: id,
+    //     [fields.PROMISE]: api.getPost(id)
+    //   });
+    // }
+    // else {
+    //   return post;
+    // }
+  };
 }
-
-
-// function fetchPosts() {
-//   return {
-//     [CALL_API]: {
-//       types: [ REQUEST_POSTS, RECEIVE_POSTS_SUCCESS, RECEIVE_POSTS_FAILURE],
-//       endpoint: `posts`,
-//       schema: Schemas.POST_ARRAY
-//     }
-//   }
-// }
-
-export function loadPost(id, slug) {
-  return (dispatch, getState) => {
-      state = getState().posts.entities
-      const post = (id, slug) => {
-        if (id) {
-          // reducer post = state.items[id]
-          console.log(state.items[id])
-          // post = state.items[id]
-          state.entities.selected = [id]
-          console.log(getState())
-          // return
-        }
-        if (slug) {
-
-        }
-      }
-      // return dispatch(fetchPost(deity, id))
-
-  }
-}
-
-// export function loadPosts(deity, nextPage) {
-//   return (dispatch, getState) => {
-//
-//     if(shouldFetchPosts(getState())) {
-//        dispatch(fetchPosts())
-//     } else {
-//       console.log('posts cached')
-//     }
-//
-//   }
-// }
-//
-// // todo - make this smarter, namely if posts != invalidated
-// function shouldFetchPosts(state) {
-//   const posts = state.posts
-//   return () => {
-//     if (typeof posts.entities.items === 'undefined' && posts.entities.items == null) {
-//       return true
-//     } else if (posts.isFetching) {
-//       return false
-//     } else {
-//       return posts.didInvalidate
-//     }
-//   }
-// }
 
 function requestPosts () {
   return {
@@ -114,18 +53,19 @@ function requestPosts () {
   }
 }
 
-function receivePosts (action) {
+function receivePosts (payload) {
+  // console.log('action', payload)
   return {
     type:  RECEIVE_POSTS_SUCCESS,
     receivedAt: Date.now(),
-    action
+    payload
   }
 }
 
 // todo - make this smarter, namely if posts != invalidated
 function shouldFetchPosts(state) {
   const posts = state.posts
-  if (posts.posts.length === 0) {
+  if (posts.result.length === 0) {
     return true
   } else if (posts.isFetching) {
     return false
@@ -134,39 +74,27 @@ function shouldFetchPosts(state) {
   }
 }
 
-export function loadPosts() {
+export function fetchPostsIfNeeded() {
   return (dispatch, getState) => {
-    // if (shouldFetchPosts(getState())) {
+    if (shouldFetchPosts(getState())) {
       return dispatch(fetchPosts())
-    // }
+    } else {
+      console.log('posts cached')
+    }
   }
 }
-const API_ROOT = 'http://localhost:3001/api/'
 
 // todo - query parameters
 function fetchPosts () {
   return function (dispatch) {
     dispatch(requestPosts())
-    return api.get(API_ROOT + 'posts/')
-    .then(response =>
-      response.json().then(json => ({ json, response }))
-    )
-    .then(({ json, response }) => {
-
-      if (!response.ok) {
-        return Promise.reject(json)
-      }
-
-      return Object.assign({},
-        normalize(json, Schemas.POST_ARRAY), {}
-      )
-    })
-      .then(res => {
+    return api.get()
+      .then( res => processResponse(res, Schemas.POST_ARRAY))
+      .then( res => {
         dispatch(receivePosts(res))
       })
       .catch(error => {
-        console.log('err', error)
-        // handleActionError(dispatch, error, REQUEST_POSTS)
+        handleActionError(dispatch, error, REQUEST_POSTS)
       })
   }
 }
