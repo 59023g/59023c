@@ -7,7 +7,6 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import promiseMiddleware from '../middleware/promiseMiddleware';
 import createLogger from 'redux-logger';
-import api from '../middleware/call-api'
 
 // todo - client only
 // import persistenceStore from '../utils/store'
@@ -26,8 +25,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 // todo - clean this up, dev/prod
 const finalCreateStore = compose(
-  applyMiddleware(thunk, api, promiseMiddleware, createLogger())
-  , DevTools.instrument()
+  applyMiddleware(thunk, promiseMiddleware, createLogger())
+  // , DevTools.instrument()
 )(createStore)
 
 const combinedReducer = combineReducers(
