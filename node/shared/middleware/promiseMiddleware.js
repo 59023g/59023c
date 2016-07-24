@@ -2,8 +2,6 @@ export default function promiseMiddleware() {
   return next => action => {
     const { promise, type, ...rest } = action;
 
-    console.log('action', action)
-
     if (!promise) return next(action);
 
     const SUCCESS = type + '_SUCCESS';
