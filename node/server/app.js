@@ -66,6 +66,21 @@ async function send(res, result) {
 app.get('/api/posts', function (req, res) {
   var data = fs.readFileSync(path.join(__dirname + '/../mock_api/posts.json'), 'utf8')
   send(res, JSON.parse(data))
+})
+
+app.get('/api/post/:url', function (req, res) {
+  var data = fs.readFileSync(path.join(__dirname + '/../mock_api/posts.json'), 'utf8')
+
+  const post = JSON.parse(data).find(post =>  {
+    const { url } = req.params;
+    if (post.url === url) {
+      res.send(post)
+
+    } else {
+      console.log('not found: params: ', url)
+      return res.status(404).send('Not found: ' + url)
+    }
+  })
 
 })
 
