@@ -5,12 +5,21 @@ import { connect } from 'react-redux'
 import { defineMessages, FormattedMessage } from 'react-intl'
 
 import ShortPost from '../components/ShortPost'
-import { loadPosts } from '../actions/posts'
+import { fetchPostsIfNeeded } from '../actions/posts'
 
 
-function loadData(props) {
-  props.loadPosts(props.deity)
-}
+const messages = defineMessages({
+  welcome: {
+    id: 'home.welcome',
+    description: 'welcome',
+    defaultMessage: 'welcom'
+  },
+  intro: {
+    id: 'home.intro',
+    description: 'texttt',
+    defaultMessage: 'text'
+  }
+})
 
 export default class HomePage extends React.Component {
 
@@ -18,22 +27,41 @@ export default class HomePage extends React.Component {
     super(props)
   }
 
+  static propTypes = {
+    fetchPostsIfNeeded: PropTypes.func.isRequired,
+    posts: PropTypes.object.isRequired
+  }
+
+  static contextTypes = {
+    store: PropTypes.any,
+    history: PropTypes.object.isRequired
+  }
+
   componentWillMount () {
-    // loadData(this.props)
-    // this.props.loadPosts(this.props.deity)
+    this.props.fetchPostsIfNeeded()
   }
 
   render () {
 
-    if(!this.props.posts.posts) {
+    if(!this.props.posts.entities.posts) {
       return null;
     }
-    // const posts = this.props.posts.entities.items
-    console.log('render')
-    console.log('sssweet', this.props.posts)
+
+    const posts = Object.values(this.props.posts.entities.posts)
+
+    console.log(Object.keys(this.props.posts.entities.posts))
+
     return (
       <div>
+        <div className="header">
+          <FormattedMessage {...messages.welcome}>
+            {text => <h1>{text}</h1>}
+          </FormattedMessage>
+        </div>
         <div className="content">
+          <p>
+            <FormattedMessage {...messages.intro} />
+          </p>
           <ul>
             { posts.map(function (post, index) {
               return (
@@ -58,30 +86,11 @@ export default class HomePage extends React.Component {
 
 // note - server side render waits until this call returns -
 // see fetchComponentDataBeforeRender()
-// HomePage.need = [
-//   loadPosts
-// ]
+HomePage.need = [
+  fetchPostsIfNeeded
+]
 
-HomePage.propTypes = {
-  // fetchPostsIfNeeded: PropTypes.func.isRequired,
-  // selectedPosts: PropTypes.array.isRequired,
-  // loadPosts: PropTypes.func.isRequired,
-  posts: PropTypes.object.isRequired
-}
-
-HomePage.contextTypes = {
-  store: PropTypes.any,
-  history: PropTypes.object.isRequired
-}
-
-function mapStateToProps(state, ownProps) {
-  const deity = ownProps.params.deity
-  return {
-    posts: state.posts,
-    deity
-  }
-}
-
-
-export default connect(mapStateToProps, {}
+export default connect(
+  ({ application, posts }) => ({ application, posts }),
+  { fetchPostsIfNeeded }
 )(HomePage)
