@@ -8,10 +8,6 @@ import Menu from '../components/Menu'
 import Footer from '../components/Footer'
 import DisplayError from '../components/DisplayError'
 
-import { resetErrorMessage } from '../actions/application'
-import { loadPosts } from '../actions/posts'
-
-
 let divStyle = {
   backgroundColor: 'aliceblue',
   width: '100%',
@@ -22,23 +18,12 @@ let divStyle = {
   left: '0'
 }
 
-function loadData(props) {
-  props.loadPosts(props.deity)
-}
-
-
 export default class Application extends React.Component {
 
   constructor (props, context) {
     super(props, context)
     this.handleMenuClick = this.handleMenuClick.bind(this)
-    this.handleDismissClick = this.handleDismissClick.bind(this)
     this.state = { isMenuActive: false }
-  }
-
-  componentWillMount () {
-    loadData(this.props)
-    // this.props.loadPosts(this.props.deity)
   }
 
    requireAuth (nextState, replaceState) {
@@ -61,35 +46,12 @@ export default class Application extends React.Component {
     this.setState({ isMenuActive: !this.state.isMenuActive })
   }
 
-  handleDismissClick(e) {
-    this.props.resetErrorMessage()
-    e.preventDefault()
-  }
-
-  renderErrorMessage() {
-    const { errorMessage } = this.props
-    if (!errorMessage) {
-      return null
-    }
-
-    return (
-      <p style={{ backgroundColor: '#e99', padding: 10 }}>
-        <b>{errorMessage}</b>
-        {' '}
-        (<a href="#"
-            onClick={this.handleDismissClick}>
-          Dismiss
-        </a>)
-      </p>
-    )
-  }
-
   render () {
 
     const isFetching = () => {
       if (
         Boolean(this.props.application.isFetching)
-        // || Boolean(this.props.posts.isFetching)
+        || Boolean(this.props.posts.isFetching)
       )
         return (
           <div style={divStyle}>Loading</div>
@@ -118,10 +80,9 @@ export default class Application extends React.Component {
 
         {showMenu()}
         {isFetching()}
-        { this.renderErrorMessage() }
-
         <div id="main">
-          { this.props.children }
+          <DisplayError />
+          {this.props.children}
         </div>
 
         <Footer />
@@ -131,33 +92,22 @@ export default class Application extends React.Component {
 }
 
 Application.propTypes = {
-  errorMessage: PropTypes.string,
-  resetErrorMessage: PropTypes.func.isRequired,
   children: PropTypes.any,
   application: PropTypes.object.isRequired,
-  loadPosts: PropTypes.func.isRequired,
   posts: PropTypes.object.isRequired
-
 };
 
 Application.contextTypes = {
   store: PropTypes.any
 }
 
-Application.need = [
-  loadPosts
-]
-
 function mapStateToProps(state, ownProps) {
+  // console.log(state, ownProps)
   return {
-    errorMessage: state.errorMessage,
     application: state.application,
     posts: state.posts
   }
 }
-export default connect(mapStateToProps, {
-  resetErrorMessage,
-  loadPosts
-})(Application)
+export default connect(mapStateToProps, {})(Application)
 
 // export { requireAuth, logout }
