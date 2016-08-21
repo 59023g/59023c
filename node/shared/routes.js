@@ -30,11 +30,14 @@ function load(nextState) {
   }
 }
 
+// todo - username, date
+// <Route path="/:username/:date/:postTitle/:id" component={ PostPage } onEnter={ load }/>
+
 export default function () {
   return (
       <Route component={ Application }>
-        <Route path="/:deity" component={ HomePage } />
-        <Route path="/:deity/:date/:postTitle/:id" component={ PostPage } />
+        <Route path="/" component={ HomePage } />
+        <Route path="/:postTitle/" component={ PostPage } onEnter={ load }/>
         <Route path="meta" component={ MetaHome } onEnter={ requireAccess }>
           <Route path="secret-area" component={ SuperSecretArea } />
         </Route>
