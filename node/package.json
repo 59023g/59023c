@@ -36,7 +36,7 @@
     "if-env": "^1.0.0",
     "intl": "~1.0.1",
     "nconf": "0.8.4",
-    "node-fetch": "1.5.3",
+    "node-fetch": "2.6.1",
     "nodemon": "1.9.2",
     "normalizr": "2.2.1",
     "parse-link-header": "0.4.1",
